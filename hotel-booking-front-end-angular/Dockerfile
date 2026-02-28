@@ -27,11 +27,15 @@ FROM nginx:alpine
 # στον φάκελο που σερβίρει ο nginx
 COPY --from=build /app/dist/bookingApp /usr/share/nginx/html
 
-# Αντιγράφουμε το nginx config που φτιάξαμε
-# Αντικαθιστά το default nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Αντιγράφουμε το nginx config ως template
+COPY nginx.conf /etc/nginx/conf.d/default.conf.template
+
+# Default τιμές για local Docker Compose (ίδιες με πριν)
+ENV BACKEND_URL=http://backend:8080
+ENV NGINX_RESOLVER=127.0.0.11
 
 # Ο nginx ακούει στην πόρτα 80
 EXPOSE 80
 
-# Ο nginx ξεκινά αυτόματα — δεν χρειάζεται ENTRYPOINT
+# Κατά την εκκίνηση: αντικατάσταση env vars στο config, μετά nginx
+CMD ["/bin/sh", "-c", "envsubst '${BACKEND_URL} ${NGINX_RESOLVER}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
