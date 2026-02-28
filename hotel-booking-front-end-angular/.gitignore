@@ -52,3 +52,6 @@ mysqld
 
 # Archives
 *.rar
+
+# Environment variables
+.env
