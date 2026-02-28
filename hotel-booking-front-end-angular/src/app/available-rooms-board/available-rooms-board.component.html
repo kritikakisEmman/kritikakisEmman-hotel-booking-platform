@@ -1,0 +1,69 @@
+<div class="container ">
+
+  <div *ngIf="hotels.length==0 && !stringFromDate" class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+
+  <div *ngIf="hotels.length==0 && stringFromDate" class="alert alert-warning text-center mt-5" role="alert">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-search mb-3" viewBox="0 0 16 16">
+      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+    </svg>
+    <h4 class="alert-heading">No Hotels Found</h4>
+    <p class="mb-0">Sorry, there are no hotels matching your search criteria.</p>
+    <hr>
+    <p class="mb-0 small">Try adjusting your dates, location, or number of guests.</p>
+  </div>
+
+
+  <!-- A card is created for every  hotel -->
+  <div *ngFor="let hotel of hotels " class="card  my-3  px-1 py-2 bg-light bg-opacity-50 ">
+    <!-- Every card is in the form of row with an image on the left and a body on the right -->
+    <div class="row ">
+
+      <!-- Cards left side-->
+      <div class="col-lg-4   ">
+        <img *ngIf="hotel.hotelImages.length!=0" [src]="hotel.hotelImages[0].data" class="card-img" alt="...">
+        <p class="card-title text-success   font-weight-bold"> City: {{hotel.address.city}}</p>
+      </div>
+
+      <!-- Cards right side-->
+      <div class="col-lg-8 ">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title text-dark  font-weight-bold">{{hotel.hotelName}}</h5>
+          <p class="card-text ">{{hotel.hotelDescription}}</p>
+       
+          <div class="d-flex flex-wrap">
+            <div *ngFor="let service of hotel.hotelServices">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#4287f5" class="bi bi-check" viewBox="0 0 16 16">
+                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+              </svg>
+              {{service.serviceName}}
+            </div>
+          </div>
+
+          <!-- The below button navigates the nested router to new component and passes the id of the hotel to the new component-->
+          <button class="btn btn-primary  float-right  align-self-end " (click)="callHotelAvailability(hotel.id)">Check availability</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- End of code of hotel card -->
+  <!-- A paginator component is presented after all hotel cards at the right side -->
+  <div class=" float-right">
+    <ngb-pagination [(page)]="pageNumber"
+                    [pageSize]="sizeNumber"
+                    [collectionSize]="theTotalElements"
+                    [maxSize]="2"
+                    [boundaryLinks]="true"
+                    (pageChange)="getHotelsPaginated()">
+
+    </ngb-pagination>
+
+  </div>
+  <!--end of paginator code-->
+
+</div>
+<!--end of the container that holds all the data for available rooms component -->

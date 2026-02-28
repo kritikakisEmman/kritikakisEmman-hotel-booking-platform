@@ -1,0 +1,31 @@
+<!--This block of code represents the third step of the registration process. It shows the hotel service checkboxes-->
+<div class="col-md-12">
+
+  <div class="card card-container">
+    <h3 class="text text-warning text-center">Hotel Services</h3>
+    <form [formGroup]="servicesForm">
+
+      <div class="container">
+        <div class="row">
+          <ng-container *ngFor="let service of hotelServices;let indexOfelement=index;">
+            <label class="col-md-3 col-sm-4 col-lg-3">
+              <input [id]="service" type="checkbox" formArrayName="selectedServices" [value]="service" [checked]="isServiceSelected(service.toString())" (change)="onCheckboxChange($event)" />
+              {{service}}
+            </label>
+
+
+
+          </ng-container>
+
+        </div>
+
+      </div>
+
+
+
+    </form>
+    <button class="btn btn-info " (click)="update()">Update Services</button>
+  </div>
+ 
+</div>
+

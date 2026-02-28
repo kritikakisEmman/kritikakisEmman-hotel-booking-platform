@@ -1,0 +1,104 @@
+
+<div class="card card-container-showAvailableRooms ">
+  <label class="text text-center text-warning h4 ">Reservations</label>
+  <table *ngIf="reservationsLength>0" class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">First Name
+
+        <th scope="col">Last Name</th>
+        <th scope="col">From Date</th>
+        <th scope="col">To Date</th>
+        <th scope="col">Passport</th>
+        <th scope="col">PhoneNumber</th>
+        <th scope="col">Check Types</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reservation of hotel.hotelReservations;let i=index">
+
+        <td>{{i+1}}</td>
+        <td>{{reservation.firstName}}</td>
+        <td>{{reservation.lastName}}</td>
+        <td>{{reservation.fromDate}}</td>
+        <td>{{reservation.toDate}}</td>
+        <td>{{reservation.passport}}</td>
+        <td>{{reservation.phoneNumber}}</td>
+        <td><button class="btn btn-info" (click)="passIndex(i)" data-toggle="modal" data-target="#exampleModal"> Types<i class="fas fa-search"></i></button></td>
+        <td><button class="btn btn-danger" (click)="deleteReservation(reservation.id)" > Delete<i class="fas fa-trash-alt"></i></button></td>
+
+
+      </tr>
+    </tbody>
+  </table>
+  <h4 *ngIf="reservationsLength==0 " class="text text-danger text-center ">There are no reservations in this hotel <i class="fas fa-sad-tear"></i></h4>
+</div>
+
+
+
+
+
+
+
+
+<!--This Modal Body is triggered when we need to add a new available room-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Reservation Types</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--Modal Body Start-->
+      <div class="modal-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+
+
+              <th scope="col">Room Name</th>
+              <th scope="col">Room Type</th>
+              <th scope="col">Availability
+              
+
+            </tr>
+          </thead>
+          <tbody>
+           
+            <tr *ngFor="let type of reservationTypes;let i=index">
+
+              <td>{{i+1}}</td>
+
+              <td>{{type.roomName}}</td>
+              <td>{{type.roomType}}</td>
+              <td>{{type.quantity}}</td>
+
+            </tr>
+                  
+          </tbody>
+        </table>
+      </div>
+
+      <!--Modal Body End-->
+      <!--Modal Body End-->
+      <div class="modal-footer">
+        <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">  Close</button>
+        
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+

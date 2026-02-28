@@ -1,0 +1,71 @@
+services:
+
+  # ─────────────────────────────────────────
+  # SERVICE 1: MySQL Database
+  # ─────────────────────────────────────────
+  mysql:
+    image: mysql:8.0          # Έτοιμη image από Docker Hub — δεν χρειάζεται Dockerfile
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"   # Το τοπικό 3307 → container 3306 (3307 για να μην συγκρούεται με την τοπική MySQL)
+    volumes:
+      - mysql_data:/var/lib/mysql        # Αποθηκεύει τα δεδομένα ακόμα και αν σταματήσει το container
+    networks:
+      - app-network
+    healthcheck:                         # Ελέγχει αν η MySQL είναι έτοιμη πριν ξεκινήσουν τα άλλα
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─────────────────────────────────────────
+  # SERVICE 2: Spring Boot Backend
+  # ─────────────────────────────────────────
+  backend:
+    build:
+      context: ./hotel-booking-back-end-spring-boot   # Ο φάκελος με το Dockerfile
+    container_name: backend
+    environment:
+      # Παρακάμπτουμε το application.properties — αλλάζουμε localhost → mysql (το service name)
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "8080:8080"   # Εκθέτουμε το 8080 για να μπορούμε να δοκιμάσουμε το API απευθείας
+    depends_on:
+      mysql:
+        condition: service_healthy       # Περιμένει μέχρι η MySQL να είναι έτοιμη
+    networks:
+      - app-network
+
+  # ─────────────────────────────────────────
+  # SERVICE 3: Angular Frontend (nginx)
+  # ─────────────────────────────────────────
+  frontend:
+    build:
+      context: ./hotel-booking-front-end-angular      # Ο φάκελος με το Dockerfile
+    container_name: frontend
+    ports:
+      - "80:80"       # Η εφαρμογή θα είναι διαθέσιμη στο http://localhost
+    depends_on:
+      - backend       # Ξεκινά μετά το backend
+    networks:
+      - app-network
+
+# ─────────────────────────────────────────
+# VOLUMES: Μόνιμη αποθήκευση δεδομένων
+# ─────────────────────────────────────────
+volumes:
+  mysql_data:         # Τα δεδομένα της MySQL δεν χάνονται αν κάνεις restart
+
+# ─────────────────────────────────────────
+# NETWORKS: Το εσωτερικό δίκτυο των containers
+# ─────────────────────────────────────────
+networks:
+  app-network:
+    driver: bridge    # Τα 3 containers μιλάνε μεταξύ τους μέσω αυτού του δικτύου

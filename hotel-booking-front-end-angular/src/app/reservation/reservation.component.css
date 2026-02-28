@@ -1,0 +1,192 @@
+/* ========== Modern Reservation/Checkout Form Styles ========== */
+
+/* Labels */
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* Hotel Image in Info Card */
+.card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+/* Modern Card Containers */
+.card-container.card {
+  max-width: 600px !important;
+  padding: 3rem;
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+  margin: 2rem auto;
+}
+
+.card-container-register.card {
+  max-width: 400px !important;
+  padding: 3rem;
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+  margin: 2rem auto;
+}
+
+.card-container-info.card {
+  max-width: 450px !important;
+  padding: 2.5rem;
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+  margin: 2rem auto;
+}
+
+/* Base Card Styles */
+.card {
+  background: #ffffff;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+/* Card Headings */
+.card h4 {
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.card h5 {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Profile/Hotel Image with Gradient */
+.profile-img-card {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 1.5rem;
+  display: block;
+  border-radius: 50%;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Preview Image */
+.preview {
+  max-width: 120px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease;
+}
+
+.preview:hover {
+  transform: scale(1.05);
+}
+
+/* Text Colors */
+.text-warning {
+  color: var(--primary-color) !important;
+  font-weight: 500;
+}
+
+/* Horizontal Rules */
+.card hr {
+  border-color: var(--border-color);
+  margin: 1.5rem 0;
+}
+
+/* Price Text Styling */
+.card b {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Form Validation */
+.text-danger {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+/* Success Message (Jumbotron) */
+.jumbotron {
+  background: linear-gradient(135deg, rgba(17, 153, 142, 0.1), rgba(56, 239, 125, 0.1));
+  border: 2px solid var(--success-color);
+  border-radius: var(--radius-xl);
+  padding: 3rem;
+  text-align: center;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.jumbotron h1 {
+  color: var(--success-color);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.jumbotron .lead {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.jumbotron .my-4 {
+  border-color: var(--success-color);
+  opacity: 0.3;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Material Form Field */
+.mat-mdc-form-field {
+  margin-top: 16px;
+}
+
+/* Button Group Spacing */
+.form-group.text-center {
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-container.card,
+  .card-container-info.card {
+    margin: 1.5rem 1rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .preview {
+    max-width: 90px;
+  }
+}

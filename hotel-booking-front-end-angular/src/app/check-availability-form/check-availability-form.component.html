@@ -1,0 +1,71 @@
+
+<div class=" mt-3">
+
+  <form [formGroup]="locationForm" class="mb-5">
+    <label class="float-left font-weight-bold">Location</label>
+
+    <input class="form-control " type="text" id="location" aria-describedby="location" placeholder="Enter location " formControlName="location" />
+    <div *ngIf="location?.invalid && (location?.dirty || location?.touched)" class="text-danger font-weight-bold mt-1  ">
+      <!-- Validation for required hotel name-->
+      <div *ngIf="location?.errors?.['required']">
+        * location  is required
+      </div>
+    </div>
+  </form>
+
+
+  <ngb-datepicker #dp (dateSelect)="onDateSelection($event)" [displayMonths]="1" [dayTemplate]="t" outsideDays="hidden" [minDate]="minDate" [maxDate]="maxDate" >
+  </ngb-datepicker>
+
+  <ng-template #t let-date let-focused="focused">
+    <span class="custom-day  "
+          [class.focused]="focused"
+          [class.range]="isRange(date)"
+          [class.faded]="isHovered(date) || isInside(date)"
+          (mouseenter)="hoveredDate = date"
+          (mouseleave)="hoveredDate = null">
+
+      {{ date.day }}
+    </span>
+  </ng-template>
+
+  <div *ngIf="!toDate" class="text-danger font-weight-bold mt-1  ">
+    <!-- Validation for required hotel name-->
+    *You need to pick checkout date
+  </div>
+  <div class="row mt-5 align-items-center">
+    <div class="col-12 col-sm-7">
+      <label class="text font-weight-bold mb-2 mb-sm-0"> Number of persons </label>
+    </div>
+    <div class="col-12 col-sm-5">
+      <div class="number-controls">
+        <button class="btn btn-danger btn-sm" (click)="decrementNumberOfPersons()">-</button>
+        <span class="badge badge-success">{{numberOfPersons}}</span>
+        <button class="btn btn-danger btn-sm" (click)="incrementNumberOfPersons()">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3 align-items-center">
+    <div class="col-12 col-sm-7">
+      <label class="text font-weight-bold mb-2 mb-sm-0"> Number of rooms </label>
+    </div>
+    <div class="col-12 col-sm-5">
+      <div class="number-controls">
+        <button class="btn btn-danger btn-sm" (click)="decrementNumberOfRooms()">-</button>
+        <span class="badge badge-success">{{numberOfRooms}}</span>
+        <button class="btn btn-danger btn-sm" (click)="incrementNumberOfRooms()">+</button>
+      </div>
+    </div>
+  </div>
+
+
+  <button class="btn btn-danger btn-block mt-2 mb-2" (click)="checkAvailableRooms()">CheckAvailability</button>
+
+
+
+</div>
+
+
+
+

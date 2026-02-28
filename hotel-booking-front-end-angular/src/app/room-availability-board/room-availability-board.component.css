@@ -1,0 +1,65 @@
+/* ========== Modern Room Availability Board Styles ========== */
+
+/* Hero Section with Background */
+#sect1 {
+  background-image: url("/assets/images/1.jpg");
+  height: 100%;
+  min-height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  margin: 2rem;
+}
+
+/* Add Modern Overlay */
+#sect1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+  z-index: 1;
+}
+
+/* Content Inside Hero */
+#sect1 > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Modern Card Container */
+.container {
+  padding: 2rem;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #sect1 {
+    margin: 1rem;
+    min-height: 300px;
+    border-radius: var(--radius-lg);
+  }
+
+  .container {
+    padding: 1rem;
+  }
+}

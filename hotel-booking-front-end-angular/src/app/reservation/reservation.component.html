@@ -1,0 +1,210 @@
+<!-- This is the main container for reservation component -->
+<div class="container ">
+
+  <!-- Info card and reservation form considered to be in 1 row with 2 columns -->
+  <div class="row" [hidden]="reservationCompleted">
+
+    <!--  The first column  contains the information card -->
+    <div class="col">
+
+      <!-- Information Card -->
+      <div class="card card-container-info ">
+
+        <!-- Title for information card -->
+        <h4>Information for reservation</h4>
+
+        <!-- There is  row in the card element because i want hotel image and hotel name to be in 2 columns -->
+        <div class="row">
+          <!-- First column  for hotel image -->
+          <div class="col">
+            <!-- Contains an image element -->
+            <img *ngIf="hotel" [src]="hotel.hotelImages[0].data" class="preview" />
+          </div>
+          <!-- End of first column for hotel image -->
+          <!-- Second column for hotel name -->
+          <div class="col">
+            <!-- Contains a title element and a paragraph element to hold  hotel name -->
+            <h5>Hotel Name</h5>
+            <p *ngIf="hotel" class="text-warning">{{hotel.hotelName}}</p>
+          </div>
+          <!-- End of second column for hotel name -->
+        </div>
+        <!-- End of row element inside card witch holds hotel image and hotel name -->
+
+        <hr />
+
+        <!-- There is  row in the card element because i want check in and checkout dates to be in 2 columns -->
+        <div class="row align-items-center">
+          <!-- First column  for checkin date -->
+          <div class="col">
+            <!-- Contains a title element and a paragraph element to hold the date -->
+            <h5>Check in</h5>
+            <p class="text-warning">{{stringFromDate}}</p>
+          </div>
+          <!-- End of first column for checkin date -->
+          <!-- Second column for checkin date -->
+          <div class="col">
+            <!-- Contains a title element and a paragraph element to hold the date -->
+            <h5>Check out</h5>
+            <p class="text-warning">{{stringToDate}}</p>
+          </div>
+          <!-- End of second column for checkin date -->
+        </div>
+        <!-- End of row element inside card witch holds check in and checout dates -->
+
+        <hr>
+
+        <!-- Section inside the card for days of reservation -->
+        <h5>Number Of Nights</h5>
+        <p>{{numberOfNights}}</p>
+        <hr>
+
+        <!-- Section inside the card for types of rooms he chose -->
+
+        <h5>You chose</h5>
+        <!-- This for loops in the selected rooms array -->
+        <div *ngFor="let room of selectedRooms ;let i=index">
+          <div *ngIf="room!=0">
+            <!-- if number is not 0 there is room and i need to print messege-->
+            <div *ngIf="room==1">
+              <!-- check for non plural number ex. 1 -->
+              <p *ngIf="selectedRoomTypes[i]=='Si'"> {{room}}   x single room </p>
+              <p *ngIf="selectedRoomTypes[i]=='Db'"> {{room}}   x double room </p>
+              <p *ngIf="selectedRoomTypes[i]=='Tr'"> {{room}}  x triple room </p>
+            </div>
+            <div *ngIf="room!=1">
+              <!-- check for plural number ex. > 1 -->
+              <p *ngIf="selectedRoomTypes[i]=='Si'"> {{room}}  x single rooms </p>
+              <p *ngIf="selectedRoomTypes[i]=='Db'"> {{room}}  x double rooms </p>
+              <p *ngIf="selectedRoomTypes[i]=='Tr'"> {{room}}  x triple rooms </p>
+            </div>
+
+          </div>
+
+
+
+        </div>
+
+
+        <hr>
+
+        <!-- Section inside the card for pricing -->
+        <h5>Price</h5>
+        <div *ngFor="let room of selectedRooms ;let i=index">
+          <div *ngIf="room!=0">
+            <!-- if number is not 0 there is room and i need to print messege-->
+            <div *ngIf="room==1">
+              <!-- check for non plural number ex. 1 -->
+              <p *ngIf="selectedRoomTypes[i]=='Si'"> {{room}}   x single room <b>{{selectedRoomPrices[i]| currency:'EUR':true }} </b> </p>
+              <p *ngIf="selectedRoomTypes[i]=='Db'"> {{room}}   x double room <b>{{selectedRoomPrices[i]| currency:'EUR':true }} </b> </p>
+              <p *ngIf="selectedRoomTypes[i]=='Tr'"> {{room}}   x triple room <b>{{selectedRoomPrices[i]| currency:'EUR':true }} </b> </p>
+            </div>
+            <div *ngIf="room!=1">
+              <!-- check for plural number ex. > 1 -->
+              <p *ngIf="selectedRoomTypes[i]=='Si'"> {{room}}   x single rooms <b class="text-right">{{selectedRoomPrices[i]| currency:'EUR':true }} </b> </p>
+              <p *ngIf="selectedRoomTypes[i]=='Db'"> {{room}}   x double rooms <b class="text-right">{{selectedRoomPrices[i]| currency:'EUR':true }} </b> </p>
+              <p *ngIf="selectedRoomTypes[i]=='Tr'"> {{room}}   x triple rooms <b class="text-right">{{selectedRoomPrices[i]| currency:'EUR':true }} </b> </p>
+            </div>
+
+          </div>
+
+
+
+        </div>
+        <p> Total Price <b> {{totalPrice | currency:'EUR':true }}  </b></p>
+      </div>
+      <!-- End of card element -->
+    </div>
+    <!-- End of column that contains the information card -->
+    <!--  The second column  contains the reservation form -->
+    <div class="col">
+
+
+      <div class="card card-container ">
+        <h4>Reservation Form</h4>
+        <form class=" justify-content-center" [formGroup]="reservationForm">
+
+          <label>First Name</label>
+          <input type="text" class="form-control" id="firstName" formControlName="firstName" />
+          <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)" class="text-danger font-weight-bold mt-1">
+            <!-- Validation for required hotel fromDate-->
+            <div *ngIf="firstName?.errors?.['required']">
+              * First Name is required
+            </div>
+
+          </div>
+
+          <label>Last Name</label>
+          <input type="text" class="form-control" id="lastName" formControlName="lastName" />
+          <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)" class="text-danger font-weight-bold mt-1">
+            <!-- Validation for required hotel fromDate-->
+            <div *ngIf="lastName?.errors?.['required']">
+              * Last Name is required
+            </div>
+
+          </div>
+
+          <label>Phone Number</label>
+          <input type="number" class="form-control" id="phoneNumber" formControlName="phoneNumber" />
+          <div *ngIf="phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)" class="text-danger font-weight-bold mt-1">
+            <!-- Validation for required hotel fromDate-->
+            <div *ngIf="phoneNumber?.errors?.['required']">
+              * Phone Number is required
+            </div>
+
+          </div>
+
+          <label>Email</label>
+          <input type="text" class="form-control" id="email" formControlName="email" />
+          <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger font-weight-bold mt-1">
+            <!-- Validation for required hotel fromDate-->
+            <div *ngIf="email?.errors?.['required']">
+              * Email is required
+            </div>
+            <div *ngIf="email?.errors?.['email']">
+              * this e-mail format is invalid
+            </div>
+          </div>
+
+
+          <div class="form-group text-center pt-2">
+            <button class="btn btn-primary mx-2" [disabled]=!isFormOk (click)="goBackToForm()">Go back to Form</button>
+            <button class="btn btn-primary " [disabled]=isFormOk (click)="checkReservationForm()">Procced To Payment</button>
+
+
+          </div>
+
+
+
+
+        </form>
+      </div>
+
+      <!---->
+      <div class="card card-container " [hidden]="!isFormOk">
+        <h4>Payment options</h4>
+        <button class="btn btn-secondary btn-block mb-3" (click)="PayInTheHotel()">Pay in the hotel</button>
+
+
+        <div #paypal>
+
+        </div>
+
+
+        <button *ngIf="selectedPaymentOption=='Pay in the hotel'" class="btn btn-primary " (click)="completeReservation()">CompleteReservation</button>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="jumbotron mt-5 text-center" [hidden]="!reservationCompleted">
+    <h1 class="display-5">Successfull Reservation!</h1>
+    <p class="lead">Congratulations {{reservationForm.get('firstName')?.value}} your reservation is completed</p>
+    <hr class="my-4">
+    <p>If you want to make an other reservation click the button.</p>
+    <p class="lead">
+      <button class="btn btn-primary btn-lg" routerLink="/availability" role="button">Check Available hotels</button>
+    </p>
+  </div>
+</div>

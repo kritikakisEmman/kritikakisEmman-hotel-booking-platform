@@ -1,0 +1,218 @@
+/* ========== Modern Reservation Dashboard Styles ========== */
+
+/* Labels */
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* Modern Card Containers */
+.card-container.card {
+  max-width: 600px !important;
+  padding: 3rem;
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+  margin: 2rem auto;
+}
+
+.card-container-register.card {
+  max-width: 400px !important;
+  padding: 3rem;
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+  margin: 2rem auto;
+}
+
+.card-container-showAvailableRooms.card {
+  max-width: 1200px !important;
+  padding: 3rem;
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+  margin: 2rem auto;
+}
+
+/* Base Card Styles */
+.card {
+  background: #ffffff;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+/* Card Title */
+.card label.h4 {
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-bottom: 2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--border-color);
+  display: block;
+}
+
+/* Modern Table Styles */
+.table {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-top: 1.5rem;
+}
+
+.table-dark {
+  background: #ffffff !important;
+  color: var(--text-primary) !important;
+}
+
+.table thead {
+  background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end)) !important;
+  color: white !important;
+}
+
+.table thead th {
+  border: none !important;
+  padding: 1rem;
+  font-weight: 600;
+  color: white !important;
+}
+
+.table-striped tbody tr {
+  transition: all 0.3s ease;
+  background: #ffffff !important;
+  color: var(--text-primary) !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background: rgba(102, 126, 234, 0.03) !important;
+}
+
+.table-striped tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.08) !important;
+  transform: scale(1.01);
+}
+
+.table tbody td {
+  padding: 1rem;
+  vertical-align: middle;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Empty State */
+.text-danger.text-center {
+  color: var(--text-secondary) !important;
+  font-size: 1.1rem;
+  padding: 2rem;
+}
+
+/* Modal Styles */
+.modal-content {
+  border-radius: var(--radius-xl);
+  border: none;
+  box-shadow: var(--shadow-xl);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+  color: white;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  padding: 1.5rem;
+  border-bottom: none;
+}
+
+.modal-title {
+  font-weight: 700;
+  margin: 0;
+  color: white;
+}
+
+.modal-header .close {
+  color: white;
+  opacity: 0.8;
+  text-shadow: none;
+}
+
+.modal-header .close:hover {
+  opacity: 1;
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.modal-footer {
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Profile Image */
+.profile-img-card {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 1.5rem;
+  display: block;
+  border-radius: 50%;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Material Form Field */
+.mat-mdc-form-field {
+  margin-top: 16px;
+}
+
+/* Preview Image */
+.preview {
+  max-width: 180px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease;
+}
+
+.preview:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .card-container-showAvailableRooms.card {
+    max-width: 100%;
+    padding: 2rem;
+    margin: 1rem;
+  }
+
+  .table {
+    font-size: 0.9rem;
+  }
+
+  .table thead th,
+  .table tbody td {
+    padding: 0.75rem 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container.card {
+    margin: 1.5rem 1rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .table {
+    font-size: 0.85rem;
+  }
+}

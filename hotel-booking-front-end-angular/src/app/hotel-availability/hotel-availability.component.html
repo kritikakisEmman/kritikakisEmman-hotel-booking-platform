@@ -1,0 +1,159 @@
+<!-- this div is the white background of this component every component will be inside this div-->
+<div class="container bg-light bg-opacity-50 mt-2 rounded  ">
+  <!-- this line gives the hotel title-->
+  <div>
+    <h3 *ngIf="hotel" class="text-dark text-center font-weight-bold">{{hotel.hotelName}}</h3>
+  </div>
+  <div class=" row justify-content-center">
+    <div class=" col-sm">
+
+
+
+
+
+
+      <!-- this carousel shows the images of the hotel-->
+      <ngb-carousel [showNavigationArrows]="true"
+                    [showNavigationIndicators]="true"
+                    [interval]="3000"
+                    [keyboard]="true"
+                    [pauseOnHover]="true"
+                    [wrap]="true">
+        <!-- with this loop we give the images to carousel-->
+        <ng-template ngbSlide *ngFor="let image of hotel.hotelImages">
+          <div class="picsum-img-wrapper">
+            <img [src]="image.data" alt="Angular Carousel 2">
+          </div>
+        </ng-template>
+        <!-- end of images loop-->
+      </ngb-carousel>
+      <!-- end of carousel-->
+    </div>
+    <div class=" col-sm ">
+
+
+
+      <p *ngIf="hotel" class="text-center font-weight-bold pt-2">Hotel Description</p>
+      <p *ngIf="hotel">{{hotel.hotelDescription}}</p>
+
+      <p *ngIf="hotel" class="text-center font-weight-bold ">Hotel Services</p>
+      <div class="d-flex flex-wrap justify-content-center pb-5">
+        <div *ngFor="let service of hotel.hotelServices">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#4287f5" class="bi bi-check" viewBox="0 0 16 16">
+            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+          </svg>
+          {{service.serviceName}}
+        </div>
+      </div>
+
+      <div class="  text-center">
+
+
+        <form class="form-inline justify-content-center" [formGroup]="availableRoomsDateForm">
+
+
+          <label>From</label>
+          <input min="{{minForFromDate | date:'yyyy-MM-dd'}}" max="{{maxForFromDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" id="fromDate" [class.is-valid]="fromDate?.valid" [class.is-invalid]="fromDate?.invalid&& (fromDate?.dirty || fromDate?.touched)" formControlName="fromDate" />
+
+
+          <label>To</label>
+          <input min="{{minForToDate | date:'yyyy-MM-dd'}}" max="{{maxForToDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" id="toDate" [class.is-valid]="toDate?.valid" [class.is-invalid]="toDate?.invalid&& (toDate?.dirty || toDate?.touched)" formControlName="toDate" />
+
+
+
+
+
+
+
+
+          <button class="btn btn-primary" (click)="search()">Search</button>
+
+
+
+        </form>
+
+        <div class="py-2">
+          <label class="text font-weight-bold "> Number of persons </label>
+          <button class="btn btn-danger btn-sm" (click)="decrementNumberOfPersons()">-</button>
+          <span class="badge badge-success">{{numberOfPersons}}</span>
+          <button class="btn btn-danger btn-sm" (click)="incrementNumberOfPersons()">+</button>
+
+        </div>
+
+        <div *ngIf="fromDate?.invalid && (fromDate?.dirty || fromDate?.touched)" class="text-danger font-weight-bold mt-1">
+          <!-- Validation for required hotel fromDate-->
+          <div *ngIf="fromDate?.errors?.['required']">
+            * From Date is required
+          </div>
+          <div *ngIf="fromDate?.errors?.['fromDateValidator']">
+            * From Date cant be after or equal to To Date
+          </div>
+        </div>
+        <div *ngIf="toDate?.invalid && (toDate?.dirty || toDate?.touched)" class="text-danger font-weight-bold mt-1">
+          <!-- Validation for required hotel toDate-->
+          <div *ngIf="toDate?.errors?.['required']">
+            * To Date is required
+          </div>
+          <div *ngIf="toDate?.errors?.['toDateValidator']">
+            * To Date cant be before or equal to From Date
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="py-5 content-padding">
+      <table class="table table-info table-striped  ">
+        <thead class="thead">
+          <tr>
+            <th scope="col">Room Name</th>
+            <th scope="col">Room Type</th>
+            <th scope="col">Persons</th>
+            <th scope="col" *ngIf="stringFromDate "> Price</th>
+            <th scope="col" *ngIf="stringFromDate">Number Of Rooms</th>
+
+          </tr>
+        </thead>
+        <tbody class="tbody-light">
+
+          <tr *ngFor="let avail of availableRooms; let i = index">
+            <td>{{avail.roomName}}</td>
+            <td *ngIf="avail.type=='Si'">Single</td>
+            <td *ngIf="avail.type=='Db'">Double</td>
+            <td *ngIf="avail.type=='Tr'">Triple</td>
+
+            <td *ngIf="avail.type=='Si'"><i class="bi bi-person"></i></td>
+            <td *ngIf="avail.type=='Db'"><i *ngFor="let i of [2,3]" class="bi bi-person"></i></td>
+            <td *ngIf="avail.type=='Tr'"><i *ngFor="let i of [2,3,3]" class="bi bi-person"></i></td>
+
+            <td *ngIf="stringFromDate ">{{selectedRoomPrices[i]}}$ for {{nights}} days</td>
+          
+            <td *ngIf="stringFromDate">
+
+              <select (change)="selectChangeHandler($event,avail,i)" [ngModel]=selectedRoomNumber style="width:50px">
+                <ng-container *ngFor="let room of roomNumbers[i]">
+                  <option value={{room}}>{{room}}</option>
+                </ng-container>
+              </select>
+            </td>
+
+          </tr>
+          <tr *ngIf="availableRooms.length==0">
+            <td><p class="text-danger">Sry no rooms matching this criteria :(</p></td>
+            
+          </tr>
+        </tbody>
+
+      </table>
+    
+        <p class="text-right text-danger font-weight-bold" *ngIf="stringFromDate && totalPrice>0  ">Total Price : {{totalPrice}}</p>
+
+        <button *ngIf="totalPrice>0" class="btn btn-primary float-right " (click)="goToReservationComponent()">Make reservation</button>
+ 
+      </div>
+
+    <!-- end of div that surrounds table-->
+  </div>
+  <!-- end of white row div-->
+</div>
+<!-- end of white background div-->

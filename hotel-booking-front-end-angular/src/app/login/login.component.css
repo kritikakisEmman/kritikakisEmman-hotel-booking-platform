@@ -1,0 +1,107 @@
+/* ========== Modern Login Form Styles ========== */
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* Modern Card Container */
+.card-container.card {
+  max-width: 450px !important;
+  padding: 3rem;
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+  margin: 3rem auto;
+}
+
+.card {
+  background: #ffffff;
+  padding: 2rem;
+  margin: 3rem auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+/* Profile Image with Gradient Background */
+.profile-img-card {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 2rem;
+  display: block;
+  border-radius: 50%;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Form Title */
+.card h2,
+.card h3,
+.card h4 {
+  text-align: center;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Alert Styles Override */
+.alert {
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.alert-danger {
+  background: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #991b1b;
+}
+
+.alert-success {
+  background: #d1fae5;
+  border: 1px solid var(--success-color);
+  color: #065f46;
+}
+
+/* Button Styles */
+.btn-block {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Links */
+.card a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.card a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .card-container.card {
+    margin: 2rem 1rem;
+    padding: 2rem 1.5rem;
+  }
+}

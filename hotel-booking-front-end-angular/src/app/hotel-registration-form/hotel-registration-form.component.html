@@ -1,0 +1,545 @@
+<div class="container mt-2 ">
+
+  <!-- Modern Stepper Component  -->
+  <div class="stepper-container">
+    <div class="stepper-wrapper">
+      <div *ngFor="let step of steps; let i = index"
+           class="step-item"
+           [class.completed]="isStepCompleted(i + 1)"
+           [class.active]="currentStep === i + 1">
+
+        <!-- Step Circle -->
+        <div class="step-circle">
+          <div class="step-number" *ngIf="!isStepCompleted(i + 1)">
+            {{ i + 1 }}
+          </div>
+          <svg *ngIf="isStepCompleted(i + 1)" class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+          </svg>
+        </div>
+
+        <!-- Step Label -->
+        <div class="step-label">{{ step }}</div>
+
+        <!-- Connector Line -->
+        <div class="step-line" *ngIf="i < steps.length - 1"
+             [class.completed]="isStepCompleted(i + 1)"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!--This block of code represents the first step of the registration process. It shows the hotel info form-->
+  <div *ngIf="currentStep==1" class="col-md-12">
+    <!--This card is the gray card that sarounds the forms-->
+    <div class="card card-container-register">
+
+      <form [formGroup]="hotelInfoForm">
+        <h4 class="h4 text-center">Hotel Info</h4>
+
+        <!-- Hotel name field-->
+        <label for="hotelName">Hotel Name</label>
+        <input type="text" class="form-control" [class.is-valid]="hotelName?.valid" [class.is-invalid]="hotelName?.invalid&& (hotelName?.dirty || hotelName?.touched)" id="hotelName" aria-describedby="hotelName" placeholder="Enter hotel name" formControlName="hotelName">
+        <!-- Validation for hotel name-->
+        <div *ngIf="hotelName?.invalid && (hotelName?.dirty || hotelName?.touched)" class="text-danger font-weight-bold mt-1">
+          <!-- Validation for required hotel name-->
+          <div *ngIf="hotelName?.errors?.['required']">
+            * Hotel name is required
+          </div>
+          <!-- Validation for min length 3 on hotel name-->
+          <div *ngIf="hotelName?.errors?.['minlength']">
+            * Minimum length is 3 characters
+          </div>
+          <!-- Validation for max length 20 on hotel name-->
+          <div *ngIf="hotelName?.errors?.['maxlength']">
+            * Maximum length is 20 characters
+          </div>
+          <!-- Validation for not only whitespaces on hotel name-->
+          <div *ngIf="hotelName?.errors?.['whitespace']">
+            * Not only whitespaces allowed
+          </div>
+        </div>
+
+        <!-- address form group that contains 4 fields-->
+        <div formGroupName="address">
+          <h4 class="h4 text-center mt-2 font-weight-bold">Address</h4>
+
+          <!-- street field-->
+          <label for="street">Street: </label>
+          <input id="street" class="form-control" [class.is-valid]="street?.valid" [class.is-invalid]="street?.invalid&& (street?.dirty || street?.touched)" street type="text" formControlName="street">
+          <!-- Validation for street field-->
+          <div *ngIf="street?.invalid && (street?.dirty || street?.touched)" class="text-danger font-weight-bold mt-1">
+            <div *ngIf="street?.errors?.['required']">
+              * Street  is required
+            </div>
+            <!-- Validation for min length 3 on street field-->
+            <div *ngIf="street?.errors?.['minlength']">
+              * Minimum length is 3 characters
+            </div>
+            <!-- Validation for max length 20 on street field-->
+            <div *ngIf="street?.errors?.['maxlength']">
+              * Maximum length is 20 characters
+            </div>
+            <!-- Validation for not only whitespaces on  street field-->
+            <div *ngIf="street?.errors?.['whitespace']">
+              * Not only whitespaces allowed
+            </div>
+
+          </div>
+
+          <!-- city field-->
+          <label for="city">City: </label>
+          <input id="city" class="form-control" [class.is-valid]="city?.valid" [class.is-invalid]="city?.invalid&& (city?.dirty || city?.touched)" type="text" formControlName="city">
+          <!-- Validation for city field-->
+          <div *ngIf="city?.invalid && (city?.dirty || city?.touched)" class="text-danger font-weight-bold mt-1">
+            <div *ngIf="city?.errors?.['required']">
+              * City  is required
+            </div>
+            <!-- Validation for min length 3 on city-->
+            <div *ngIf="city?.errors?.['minlength']">
+              * Minimum length is 3 characters
+            </div>
+            <!-- Validation for max length 20 on city-->
+            <div *ngIf="city?.errors?.['maxlength']">
+              * Maximum length is 20 characters
+            </div>
+            <!-- Validation for not only whitespaces on city-->
+            <div *ngIf="city?.errors?.['whitespace']">
+              * Not only whitespaces allowed
+            </div>
+          </div>
+
+          <!-- state field-->
+          <label for="state">State: </label>
+          <input id="state" class="form-control" [class.is-valid]="state?.valid" [class.is-invalid]="state?.invalid&& (state?.dirty || state?.touched)" type="text" formControlName="state">
+          <!-- Validation for state field-->
+          <div *ngIf="state?.invalid && (state?.dirty || state?.touched)" class="text-danger font-weight-bold mt-1">
+            <div *ngIf="state?.errors?.['required']">
+              * State  is required
+            </div>
+            <!-- Validation for min length 3 on state-->
+            <div *ngIf="state?.errors?.['minlength']">
+              * Minimum length is 3 characters
+            </div>
+            <!-- Validation for max length 20 on state-->
+            <div *ngIf="state?.errors?.['maxlength']">
+              * Maximum length is 20 characters
+            </div>
+            <!-- Validation for not only whitespaces on state-->
+            <div *ngIf="state?.errors?.['whitespace']">
+              * Not only whitespaces allowed
+            </div>
+          </div>
+
+          <!-- zipCode field-->
+          <label for="zip">ZIP Code: </label>
+          <input id="zipCode" class="form-control " [class.is-valid]="zipCode?.valid" [class.is-invalid]="zipCode?.invalid&& (zipCode?.dirty || zipCode?.touched)" type="text" formControlName="zipCode">
+
+        </div>
+        <!-- Validation for zipCode field-->
+        <div *ngIf="zipCode?.invalid && (zipCode?.dirty || zipCode?.touched)" class="text-danger font-weight-bold mt-1">
+          <div *ngIf="zipCode?.errors?.['required']">
+            * ZIP code  is required
+          </div>
+          <!-- Validation for min length 3 on zipCode-->
+          <div *ngIf="zipCode?.errors?.['minlength']">
+            * Zip code must contain 5 numbers
+          </div>
+          <!-- Validation for max length 20 on zipCode-->
+          <div *ngIf="zipCode?.errors?.['maxlength']">
+            * Zip code must contain 5 numbers
+          </div>
+          <div *ngIf="zipCode?.errors?.['pattern']">
+            * Zip code requires only numbers
+          </div>
+          <!-- Validation for not only whitespaces on zipCode-->
+          <div *ngIf="zipCode?.errors?.['whitespace']">
+            * Not only whitespaces allowed
+          </div>
+        </div>
+
+        <!-- Hotel Description field-->
+        <label for="hotelDescription">Hotel Description</label>
+        <textarea class="form-control" [class.is-valid]="hotelDescription?.valid" [class.is-invalid]="hotelDescription?.invalid&& (hotelDescription?.dirty || hotelDescription?.touched)" id="hotelDescription" aria-describedby="hotelDescription" placeholder="Enter hotel Description here" formControlName="hotelDescription"> </textarea>
+        <!-- Validation for hotel Description-->
+        <div *ngIf="hotelDescription?.invalid && (hotelDescription?.dirty || hotelDescription?.touched)" class="text-danger font-weight-bold mt-1">
+          <!-- Validation for required hotel Description-->
+          <div *ngIf="hotelDescription?.errors?.['required']">
+            * Hotel description is required
+          </div>
+          <!-- Validation for min length 3 on hotel Description-->
+          <div *ngIf="hotelDescription?.errors?.['minlength']">
+            * Minimum length is 100 characters
+          </div>
+          <!-- Validation for max length 20 on hotel Description-->
+          <div *ngIf="hotelDescription?.errors?.['maxlength']">
+            * Maximum length is 500 characters
+          </div>
+          <!-- Validation for not only whitespaces on hotel Description-->
+          <div *ngIf="hotelDescription?.errors?.['whitespace']">
+            * Not only whitespaces allowed
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!--This block of code represents the second step of the registration process. It shows the hotel rooms array-->
+  <div *ngIf="currentStep==2" class="col-md-12">
+
+    <div class="card card-container ">
+      <h4 class="h4">Hotel Rooms</h4>
+      <!--This form has the input values of check in and check out date-->
+      <form [formGroup]="availableRoomsDateForm">
+        <label>From</label>
+        <input min="{{minForFromDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" id="fromDate" [class.is-valid]="fromDate?.valid" [class.is-invalid]="fromDate?.invalid&& (fromDate?.dirty || fromDate?.touched)" formControlName="fromDate" />
+        <div *ngIf="fromDate?.invalid && (fromDate?.dirty || fromDate?.touched)" class="text-danger font-weight-bold mt-1">
+          <!-- Validation for required hotel fromDate-->
+          <div *ngIf="fromDate?.errors?.['required']">
+            * From Date is required
+          </div>
+          <div *ngIf="fromDate?.errors?.['fromDateValidator']">
+            * From Date cant be after or equal to To Date
+          </div>
+        </div>
+
+        <label>To</label>
+        <input min="{{minForToDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" id="toDate" [class.is-valid]="toDate?.valid" [class.is-invalid]="toDate?.invalid&& (toDate?.dirty || toDate?.touched)" formControlName="toDate" />
+        <div *ngIf="toDate?.invalid && (toDate?.dirty || toDate?.touched)" class="text-danger font-weight-bold mt-1">
+          <!-- Validation for required hotel toDate-->
+          <div *ngIf="toDate?.errors?.['required']">
+            * To Date is required
+          </div>
+          <div *ngIf="toDate?.errors?.['toDateValidator']">
+            * To Date cant be before or equal to From Date
+          </div>
+        </div>
+
+
+      </form>
+
+
+      <div *ngIf="addRoomClicked==false" class="  text-center mt-5">
+
+        <p class="lead">You do not have add rooms in your hotel.</p>
+
+        <p class="lead">
+          <a class="btn btn-primary btn-lg text-light" (click)="addRoom()" data-target="#exampleModal">Add room</a>
+        </p>
+      </div>
+
+
+      <div *ngIf="addRoomClicked==true" class=" mt-5 ">
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col" style="width: 25%">Room Name
+
+              <th scope="col" style="width: 25%">Room Type</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tempAvailableRooms of availableRooms">
+              <td>{{tempAvailableRooms.number}}</td>
+              <td>{{tempAvailableRooms.roomName}}</td>
+              <td>{{tempAvailableRooms.roomType}}</td>
+              <td>{{tempAvailableRooms.quantity}}</td>
+              <td class="col">
+
+
+                <button class="btn btn-danger mx-2" (click)="deleteAvailableRooms(tempAvailableRooms.number)"> <i class="fas fa-trash"></i> Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary"><i class="fas fa-plus"></i> Add Room  </button>
+
+      </div>
+      <!-- Validation for no rooms field-->
+      <div *ngIf="availableRooms.length==0" class="text-danger font-weight-bold mt-1">
+
+        *You need to Add at least 1 room to your hotel
+
+      </div>
+
+    </div>
+  </div>
+  <!--This block of code represents the third step of the registration process. It shows the hotel service checkboxes-->
+  <div *ngIf="currentStep==3" class="col-md-12">
+
+    <div class="card card-container">
+      <h3 class="text text-center">Hotel Services</h3>
+      <form [formGroup]="servicesForm">
+
+        <div class="container">
+          <div class="row">
+            <ng-container *ngFor="let service of hotelServices;let indexOfelement=index;">
+              <label class="col-md-3 col-sm-4 col-lg-3">
+                <input type="checkbox" formArrayName="selectedServices" [value]="service" (change)="onCheckboxChange($event)" />
+                {{service}}
+              </label>
+
+
+
+            </ng-container>
+
+          </div>
+
+        </div>
+
+
+
+      </form>
+    </div>
+  </div>
+
+  <!--This block of code represents the 4th step of the registration process. It shows the file upload option-->
+  <div *ngIf="currentStep==4" class="col-md-12">
+
+    <div class="card card-container">
+
+      <h3 class="text-center text ">Upload hotel images</h3>
+
+      <!--input for files-->
+      <label for="hotelName">Hotel Name</label>
+      <input type="file" accept="image/*" multiple (change)="selectFiles($event)">
+      <!--preview of images -->
+      <div>
+        <img *ngFor='let preview of previews' [src]="preview" class="preview">
+      </div>
+
+      <div *ngIf="selectedFiles==undefined" class="text-danger font-weight-bold mt-1">
+
+        *You need to Add at least 1 picture to your hotel
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <!--This block of code represents the 5th step of the registration process. It shows the user registration component-->
+
+  <div *ngIf="currentStep==5" class="col-md-12">
+
+    <div class="card card-container-register">
+      <img id="profile-img"
+           src="/assets/images/user-plus-solid.svg"
+           class="profile-img-card" />
+      <form *ngIf="!isSuccessful"
+            name="form"
+            (ngSubmit)="f.form.valid && complete()"
+            #f="ngForm"
+            novalidate>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text"
+                 class="form-control"
+                 name="username"
+                 [(ngModel)]="form.username"
+                 required
+                 minlength="6"
+                 maxlength="20"
+                 #username="ngModel" />
+          <div class="text-danger font-weight-bold mt-1r" *ngIf="username.errors && f.submitted">
+            <div *ngIf="username.errors.required">*Username is required</div>
+            <div *ngIf="username.errors.minlength">
+              *Username must be at least 6 characters
+            </div>
+            <div *ngIf="username.errors.maxlength">
+              *Username must be at most 20 characters
+            </div>
+          </div>
+
+
+
+
+
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email"
+                 class="form-control"
+                 name="email"
+                 [(ngModel)]="form.email"
+                 required
+                 email
+                 #email="ngModel" />
+          <div class=" text-danger font-weight-bold mt-1r" *ngIf="email.errors && f.submitted">
+            <div *ngIf="email.errors.required">*Email is required</div>
+            <div *ngIf="email.errors.email">
+              *Email must be a valid email address
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password"
+                 class="form-control"
+                 name="password"
+                 [(ngModel)]="form.password"
+                 required
+                 minlength="6"
+                 #password="ngModel" />
+          <div class="text-danger font-weight-bold mt-1r" *ngIf="password.errors && f.submitted">
+            <div *ngIf="password.errors.required">*Password is required</div>
+            <div *ngIf="password.errors.minlength">
+              *Password must be at least 6 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <button *ngIf="currentStep==steps.length" class="btn btn-primary btn-block text-center">Complete Registration</button>
+
+
+        </div>
+
+        <div class="alert alert-danger" *ngIf="f.submitted && isSignUpFailed">
+          Signup failed!<br />{{ errorMessage }}
+        </div>
+      </form>
+
+      <div class="alert alert-success" *ngIf="isSuccessful">
+        Your registration is successful!
+      </div>
+      <div *ngIf="isSignupSuccessful!=true && currentStep==5" class=" text-danger  font-weight-bold ">
+        * Last Step! You need to create an account in order to complete
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+  <!--This block of code represents the 6th step of the registration process. It shows the message of succesfull hotel registration-->
+  <div *ngIf="currentStep==6" class="col-md-12">
+
+    <div class="card card-container">
+
+      <div class="jumbotron">
+        <h1 class="display-5">Successfull Registration!</h1>
+        <p class="lead">Your hotel has been successfuly added to our website.</p>
+        <hr class="my-4">
+        <p>If you want to log in and see your hotel dashboard click the button.</p>
+        <p class="lead">
+          <button class="btn btn-primary btn-lg" routerLink="/login" role="button">Log In</button>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!--This block of code is for previous and next buton ander the steps-->
+
+  <div class="d-flex justify-content-center">
+
+    <button *ngIf="currentStep>1 && currentStep<steps.length+1" class="btn btn-primary" (click)="previous()">previus</button>
+    <button *ngIf="currentStep<steps.length" class="btn btn-primary" (click)="next()">next</button>
+
+
+
+  </div>
+
+</div>
+
+
+  <!--This Modal Body is triggered when we need to add a new available room-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Type Details</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!--Modal Body Start-->
+        <div class="modal-body">
+          <form [formGroup]="availableRoomsForm">
+            <h4 class="h4">Add Room Type</h4>
+
+            <!--roomName field-->
+            <label for="roomName">Room Name</label>
+            <input type="text" class="form-control" id="roomName" aria-describedby="roomName" placeholder="Enter room name" formControlName="roomName">
+            <!--Validation for roomName field-->
+            <div *ngIf="roomName?.invalid && (roomName?.dirty || roomName?.touched)" class="text-danger font-weight-bold mt-1">
+              <div *ngIf="roomName?.errors?.['required']">
+                *Room Name is required
+              </div>
+              <!-- Validation for min length 3 on roomName-->
+              <div *ngIf="roomName?.errors?.['minlength']">
+                * Minimum length is 3 characters
+              </div>
+              <!-- Validation for max length 20 on roomName-->
+              <div *ngIf="roomName?.errors?.['maxlength']">
+                * Maximum length is 20 characters
+              </div>
+              <!-- Validation for not only whitespaces on roomName-->
+              <div *ngIf="roomName?.errors?.['notWhitespaceAtAll']">
+                * Not only whitespaces allowed
+              </div>
+            </div>
+
+
+            <label for="roomType">Room Type</label>
+            <select formControlName="roomType" (change)="selectChangeHandler($event)" [(ngModel)]="selectedType" class="form-control">
+              <ng-container *ngFor="let types of roomTypes">
+                <option value={{types}}>{{types}}</option>
+              </ng-container>
+            </select>
+
+
+            <!--Quantity field-->
+            <label for="quantity">Quantity </label>
+            <input id="quantity" class="form-control" type="number" formControlName="quantity">
+            <!--Validation for quantity field-->
+            <div *ngIf="quantity?.invalid && (quantity?.dirty || quantity?.touched)" class="text-danger font-weight-bold mt-1">
+              <div *ngIf="quantity?.errors?.['required']">
+                *Quantity  is required
+              </div>
+              <div *ngIf="quantity?.errors?.['min']">
+                * You need to enter at least 1 room
+              </div>
+            </div>
+
+            <!--Quantity field-->
+            <label for="roomPrice">Room Price </label>
+            <input id="roomPrice" class="form-control" type="number" formControlName="roomPrice" placeholder="Enter minimum room price per night">
+            <!--Validation for quantity field-->
+            <div *ngIf="roomPrice?.invalid && (roomPrice?.dirty || roomPrice?.touched)" class="text-danger font-weight-bold mt-1">
+              <div *ngIf="roomPrice?.errors?.['required']">
+                *roomPrice  is required
+              </div>
+              
+            </div>
+
+
+
+
+
+
+
+
+          </form>
+        </div>
+
+        <!--Modal Body End-->
+        <!--Modal Body End-->
+        <div class="modal-footer">
+          <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">  Close</button>
+          <button type="button" (click)="addAvailableRooms()" class="btn btn-primary"><i class=" fas fa-solid fa-plus"></i> Add</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+

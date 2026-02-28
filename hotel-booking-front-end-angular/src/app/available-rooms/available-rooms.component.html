@@ -1,0 +1,262 @@
+
+<div class="card card-container-showAvailableRooms ">
+  <h4 class="h4 text-center text-warning">AvailableRooms Rooms</h4>
+  <!--This form has the input values of check in and check out date-->
+
+
+
+
+
+
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col" style="width: 25%">From
+
+        <th scope="col" style="width: 25%">To</th>
+        <th scope="col" style="width: 25%">Room Name
+
+        <th scope="col" style="width: 25%">Room Type</th>
+
+        <th scope="col">Quantity</th>
+        <!--                 <th scope="col">Actions</th>                       -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tempAvailableRooms of hotel.availableRooms;let i=index">
+        <td>{{i+1}}</td>
+        <td>{{tempAvailableRooms.fromDate}}</td>
+        <td>{{tempAvailableRooms.toDate}}</td>
+        <td>{{tempAvailableRooms.roomName}}</td>
+        <td>{{tempAvailableRooms.roomType}}</td>
+        <td>{{tempAvailableRooms.quantity}}</td>
+        <!--  <td class="col">
+            <button class="btn btn-danger mx-2" (click)="deleteAvailableRooms(tempAvailableRooms.number)"> <i class="fas fa-trash"></i> Delete</button>
+          </td> -->
+      </tr>
+    </tbody>
+  </table>
+
+
+  <div *ngIf="addRoomClicked==false" class="  text-right mt-5">
+
+    <p class="lead">If you like to add more rooms.</p>
+
+    <p class="lead">
+      <a class="btn btn-info btn-lg text-light" (click)="changeShowAddRooms()" data-target="#exampleModal">Click me</a>
+    </p>
+  </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="card card-container " *ngIf="showAddRooms==true">
+  <h4 class="h4">Hotel Rooms</h4>
+  <!--This form has the input values of check in and check out date-->
+  <form [formGroup]="availableRoomsDateForm">
+    <label>From</label>
+    <input min="{{minForFromDate | date:'yyyy-MM-dd'}}" max="{{maxForFromDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" id="fromDate" [class.is-valid]="fromDate?.valid" [class.is-invalid]="fromDate?.invalid&& (fromDate?.dirty || fromDate?.touched)" formControlName="fromDate" />
+    <div *ngIf="fromDate?.invalid && (fromDate?.dirty || fromDate?.touched)" class="text-danger font-weight-bold mt-1">
+      <!-- Validation for required hotel fromDate-->
+      <div *ngIf="fromDate?.errors?.['required']">
+        * From Date is required
+      </div>
+      <div *ngIf="fromDate?.errors?.['fromDateValidator']">
+        * From Date cant be after or equal to To Date
+      </div>
+    </div>
+
+    <label>To</label>
+    <input min="{{minForToDate | date:'yyyy-MM-dd'}}" max="{{maxForToDate | date:'yyyy-MM-dd'}}"type="date" class="form-control" id="toDate" [class.is-valid]="toDate?.valid" [class.is-invalid]="toDate?.invalid&& (toDate?.dirty || toDate?.touched)" formControlName="toDate" />
+    <div *ngIf="toDate?.invalid && (toDate?.dirty || toDate?.touched)" class="text-danger font-weight-bold mt-1">
+      <!-- Validation for required hotel toDate-->
+      <div *ngIf="toDate?.errors?.['required']">
+        * To Date is required
+      </div>
+      <div *ngIf="toDate?.errors?.['toDateValidator']">
+        * To Date cant be before or equal to From Date
+      </div>
+    </div>
+
+
+  </form>
+
+
+  <div *ngIf="addRoomClicked==false" class="  text-center mt-5">
+
+
+
+    <p class="lead">
+      <a class="btn btn-primary btn-lg text-light" (click)="addRoom()" data-target="#exampleModal">Add room</a>
+    </p>
+  </div>
+
+
+  <div *ngIf="addRoomClicked==true" class=" mt-5 ">
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col" style="width: 25%">Room Name
+
+          <th scope="col" style="width: 25%">Room Type</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tempAvailableRooms of availableRooms">
+          <td>{{tempAvailableRooms.number}}</td>
+          <td>{{tempAvailableRooms.roomName}}</td>
+          <td>{{tempAvailableRooms.roomType}}</td>
+          <td>{{tempAvailableRooms.quantity}}</td>
+          <td class="col">
+
+
+            <button class="btn btn-danger mx-2" (click)="deleteAvailableRooms(tempAvailableRooms.number)"> <i class="fas fa-trash"></i> Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary"><i class="fas fa-plus"></i> Add Room  </button>
+
+  </div>
+  <!-- Validation for no rooms field-->
+  <div *ngIf="availableRooms.length==0" class="text-danger font-weight-bold mt-1">
+
+    *You need to Add at least 1 room to your hotel
+
+  </div>
+  <a *ngIf="availableRooms.length>0" class="btn btn-info btn-lg text-light mt-2"  (click)="complete()" data-target="#exampleModal">Complete</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--This Modal Body is triggered when we need to add a new available room-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Type Details</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--Modal Body Start-->
+      <div class="modal-body">
+        <form [formGroup]="availableRoomsForm">
+          <h4 class="h4">Add Room Type</h4>
+
+          <!--roomName field-->
+          <label for="roomName">Room Name</label>
+          <input type="text" class="form-control" id="roomName" aria-describedby="roomName" placeholder="Enter room name" formControlName="roomName">
+          <!--Validation for roomName field-->
+          <div *ngIf="roomName?.invalid && (roomName?.dirty || roomName?.touched)" class="text-danger font-weight-bold mt-1">
+            <div *ngIf="roomName?.errors?.['required']">
+              *Room Name is required
+            </div>
+            <!-- Validation for min length 3 on roomName-->
+            <div *ngIf="roomName?.errors?.['minlength']">
+              * Minimum length is 3 characters
+            </div>
+            <!-- Validation for max length 20 on roomName-->
+            <div *ngIf="roomName?.errors?.['maxlength']">
+              * Maximum length is 20 characters
+            </div>
+            <!-- Validation for not only whitespaces on roomName-->
+            <div *ngIf="roomName?.errors?.['notWhitespaceAtAll']">
+              * Not only whitespaces allowed
+            </div>
+          </div>
+
+
+          <label for="roomType">Room Type</label>
+          <select formControlName="roomType" (change)="selectChangeHandler($event)" [(ngModel)]="selectedType" class="form-control">
+            <ng-container *ngFor="let types of roomTypes">
+              <option value={{types}}>{{types}}</option>
+            </ng-container>
+          </select>
+
+
+          <!--Quantity field-->
+          <label for="quantity">Quantity </label>
+          <input id="quantity" class="form-control" type="number" formControlName="quantity">
+          <!--Validation for quantity field-->
+          <div *ngIf="quantity?.invalid && (quantity?.dirty || quantity?.touched)" class="text-danger font-weight-bold mt-1">
+            <div *ngIf="quantity?.errors?.['required']">
+              *Quantity  is required
+            </div>
+            <div *ngIf="quantity?.errors?.['min']">
+              * You need to enter at least 1 room
+            </div>
+          </div>
+
+          <!--Quantity field-->
+          <label for="roomPrice">Room Price </label>
+          <input id="roomPrice" class="form-control" type="number" formControlName="roomPrice" placeholder="Enter minimum room price per night">
+          <!--Validation for quantity field-->
+          <div *ngIf="roomPrice?.invalid && (roomPrice?.dirty || roomPrice?.touched)" class="text-danger font-weight-bold mt-1">
+            <div *ngIf="roomPrice?.errors?.['required']">
+              *roomPrice  is required
+            </div>
+
+          </div>
+
+
+
+
+
+
+
+
+        </form>
+      </div>
+
+      <!--Modal Body End-->
+      <!--Modal Body End-->
+      <div class="modal-footer">
+        <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">  Close</button>
+        <button type="button" (click)="addAvailableRooms()" class="btn btn-primary"><i class=" fas fa-solid fa-plus"></i> Add</button>
+
+      </div>
+    </div>
+  </div>
+</div>

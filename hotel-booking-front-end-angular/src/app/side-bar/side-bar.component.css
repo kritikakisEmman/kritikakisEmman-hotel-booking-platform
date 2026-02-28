@@ -1,0 +1,146 @@
+/* ========== Modern Sidebar Styles ========== */
+
+/* Sidebar Background */
+.backgroundColor {
+  min-width: 16%;
+  background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+/* Add subtle overlay for depth */
+.backgroundColor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
+  pointer-events: none;
+}
+
+/* Menu Header */
+.backgroundColor .fs-5 {
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Navigation List */
+.nav-pills {
+  position: relative;
+  z-index: 1;
+}
+
+/* List Items */
+li {
+  padding-bottom: 1.5rem;
+}
+
+/* Navigation Links */
+.backgroundColor a {
+  color: rgba(255, 255, 255, 0.85) !important;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.backgroundColor a:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white !important;
+  transform: translateX(5px);
+}
+
+.backgroundColor a.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: white !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Icons */
+.backgroundColor a i,
+.backgroundColor a .fas {
+  font-size: 1.1rem;
+  width: 24px;
+  text-align: center;
+}
+
+/* Text in Links */
+.backgroundColor a span {
+  font-size: 0.95rem;
+}
+
+/* Divider */
+.backgroundColor hr {
+  border-color: rgba(255, 255, 255, 0.2);
+  margin: 1.5rem 0;
+}
+
+/* Dropdown User Section */
+.dropdown {
+  position: relative;
+  z-index: 1;
+}
+
+.dropdown-toggle {
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  transition: all 0.3s ease;
+}
+
+.dropdown-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.dropdown-toggle img {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: border-color 0.3s ease;
+}
+
+.dropdown-toggle:hover img {
+  border-color: white;
+}
+
+/* Dropdown Menu */
+.dropdown-menu-dark {
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl);
+}
+
+.dropdown-item {
+  color: rgba(255, 255, 255, 0.85);
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .backgroundColor {
+    min-width: auto;
+    width: 100%;
+  }
+
+  li {
+    padding-bottom: 1rem;
+  }
+
+  .backgroundColor a {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+}

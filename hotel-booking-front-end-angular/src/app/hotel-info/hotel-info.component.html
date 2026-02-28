@@ -1,0 +1,155 @@
+<!--This block of code represents the first step of the registration process. It shows the hotel info form-->
+<div  class="col-md-12">
+  <!--This card is the gray card that sarounds the forms-->
+  <div class="card card-container-register">
+
+    <form [formGroup]="hotelInfoForm">
+      <h4 class="h4 text-center text-warning">Hotel Info</h4>
+
+      <!-- Hotel name field-->
+      <label for="hotelName">Hotel Name</label>
+      <input type="text" class="form-control" [class.is-valid]="hotelName?.valid" [class.is-invalid]="hotelName?.invalid&& (hotelName?.dirty || hotelName?.touched)"   id="hotelName" aria-describedby="hotelName" placeholder="Enter hotel name" formControlName="hotelName">
+      <!-- Validation for hotel name-->
+      <div *ngIf="hotelName?.invalid && (hotelName?.dirty || hotelName?.touched)" class="text-danger font-weight-bold mt-1">
+        <!-- Validation for required hotel name-->
+        <div *ngIf="hotelName?.errors?.['required']">
+          * Hotel name is required
+        </div>
+        <!-- Validation for min length 3 on hotel name-->
+        <div *ngIf="hotelName?.errors?.['minlength']">
+          * Minimum length is 3 characters
+        </div>
+        <!-- Validation for max length 20 on hotel name-->
+        <div *ngIf="hotelName?.errors?.['maxlength']">
+          * Maximum length is 20 characters
+        </div>
+        <!-- Validation for not only whitespaces on hotel name-->
+        <div *ngIf="hotelName?.errors?.['whitespace']">
+          * Not only whitespaces allowed
+        </div>
+      </div>
+
+      <!-- address form group that contains 4 fields-->
+      <div formGroupName="address">
+        <h4 class="h4 text-center text-warning mt-2 ">Address</h4>
+
+        <!-- street field-->
+        <label for="street">Street: </label>
+        <input id="street" class="form-control"[class.is-valid]="street?.valid" [class.is-invalid]="street?.invalid&& (street?.dirty || street?.touched)" street type="text" formControlName="street">
+        <!-- Validation for street field-->
+        <div *ngIf="street?.invalid && (street?.dirty || street?.touched)" class="text-danger font-weight-bold mt-1">
+          <div *ngIf="street?.errors?.['required']">
+            * Street  is required
+          </div>
+          <!-- Validation for min length 3 on street field-->
+          <div *ngIf="street?.errors?.['minlength']">
+            * Minimum length is 3 characters
+          </div>
+          <!-- Validation for max length 20 on street field-->
+          <div *ngIf="street?.errors?.['maxlength']">
+            * Maximum length is 20 characters
+          </div>
+          <!-- Validation for not only whitespaces on  street field-->
+          <div *ngIf="street?.errors?.['whitespace']">
+            * Not only whitespaces allowed
+          </div>
+
+        </div>
+
+        <!-- city field-->
+        <label for="city">City: </label>
+        <input id="city" class="form-control" [class.is-valid]="city?.valid" [class.is-invalid]="city?.invalid&& (city?.dirty || city?.touched)" type="text" formControlName="city">
+        <!-- Validation for city field-->
+        <div *ngIf="city?.invalid && (city?.dirty || city?.touched)" class="text-danger font-weight-bold mt-1">
+          <div *ngIf="city?.errors?.['required']">
+            * City  is required
+          </div>
+          <!-- Validation for min length 3 on city-->
+          <div *ngIf="city?.errors?.['minlength']">
+            * Minimum length is 3 characters
+          </div>
+          <!-- Validation for max length 20 on city-->
+          <div *ngIf="city?.errors?.['maxlength']">
+            * Maximum length is 20 characters
+          </div>
+          <!-- Validation for not only whitespaces on city-->
+          <div *ngIf="city?.errors?.['whitespace']">
+            * Not only whitespaces allowed
+          </div>
+        </div>
+
+        <!-- state field-->
+        <label for="state">State: </label>
+        <input id="state" class="form-control"   [class.is-valid]="state?.valid" [class.is-invalid]="state?.invalid&& (state?.dirty || state?.touched)" type="text" formControlName="state">
+        <!-- Validation for state field-->
+        <div *ngIf="state?.invalid && (state?.dirty || state?.touched)" class="text-danger font-weight-bold mt-1">
+          <div *ngIf="state?.errors?.['required']">
+            * State  is required
+          </div>
+          <!-- Validation for min length 3 on state-->
+          <div *ngIf="state?.errors?.['minlength']">
+            * Minimum length is 3 characters
+          </div>
+          <!-- Validation for max length 20 on state-->
+          <div *ngIf="state?.errors?.['maxlength']">
+            * Maximum length is 20 characters
+          </div>
+          <!-- Validation for not only whitespaces on state-->
+          <div *ngIf="state?.errors?.['whitespace']">
+            * Not only whitespaces allowed
+          </div>
+        </div>
+
+        <!-- zipCode field-->
+        <label for="zip">ZIP Code: </label>
+        <input id="zipCode" class="form-control " [class.is-valid]="zipCode?.valid" [class.is-invalid]="zipCode?.invalid&& (zipCode?.dirty || zipCode?.touched)" type="text" formControlName="zipCode">
+
+      </div>
+      <!-- Validation for zipCode field-->
+      <div *ngIf="zipCode?.invalid && (zipCode?.dirty || zipCode?.touched)" class="text-danger font-weight-bold mt-1">
+        <div *ngIf="zipCode?.errors?.['required']">
+          * ZIP code  is required
+        </div>
+        <!-- Validation for min length 3 on zipCode-->
+        <div *ngIf="zipCode?.errors?.['minlength']">
+          * Zip code must contain 5 numbers
+        </div>
+        <!-- Validation for max length 20 on zipCode-->
+        <div *ngIf="zipCode?.errors?.['maxlength']">
+          * Zip code must contain 5 numbers
+        </div>
+        <div *ngIf="zipCode?.errors?.['pattern']">
+          * Zip code requires only numbers
+        </div>
+        <!-- Validation for not only whitespaces on zipCode-->
+        <div *ngIf="zipCode?.errors?.['whitespace']">
+          * Not only whitespaces allowed
+        </div>
+      </div>
+
+      <!-- Hotel Description field-->
+      <label class ="h4 text text-center text-warning" for="hotelDescription">Hotel Description</label>
+      <textarea class="form-control"  [class.is-valid]="hotelDescription?.valid" [class.is-invalid]="hotelDescription?.invalid&& (hotelDescription?.dirty || hotelDescription?.touched)"id="hotelDescription" aria-describedby="hotelDescription" placeholder="Enter hotel Description here" formControlName="hotelDescription"> </textarea>
+      <!-- Validation for hotel Description-->
+      <div *ngIf="hotelDescription?.invalid && (hotelDescription?.dirty || hotelDescription?.touched)" class="text-danger font-weight-bold mt-1">
+        <!-- Validation for required hotel Description-->
+        <div *ngIf="hotelDescription?.errors?.['required']">
+          * Hotel description is required
+        </div>
+        <!-- Validation for min length 3 on hotel Description-->
+        <div *ngIf="hotelDescription?.errors?.['minlength']">
+          * Minimum length is 100 characters
+        </div>
+        <!-- Validation for max length 20 on hotel Description-->
+        <div *ngIf="hotelDescription?.errors?.['maxlength']">
+          * Maximum length is 500 characters
+        </div>
+        <!-- Validation for not only whitespaces on hotel Description-->
+        <div *ngIf="hotelDescription?.errors?.['whitespace']">
+          * Not only whitespaces allowed
+        </div>
+      </div>
+    </form>
+    <button class="btn btn-info mt-2" (click)="updateHotelInfo()">Update</button>
+  </div>
+

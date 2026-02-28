@@ -1,0 +1,161 @@
+/* ========== Modern Hotel Images Dashboard Styles ========== */
+
+/* Labels */
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* Modern Card Containers */
+.card-container.card {
+  max-width: 800px !important;
+  padding: 3rem;
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+  margin: 2rem auto;
+}
+
+.card-container-register.card {
+  max-width: 500px !important;
+  padding: 3rem;
+  background: #ffffff;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+  margin: 2rem auto;
+}
+
+/* Base Card Styles */
+.card {
+  background: #ffffff;
+  padding: 2rem;
+  margin: 2rem auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+/* Card Headings */
+.card h4,
+.card h5 {
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+/* Profile/Icon Image with Gradient */
+.profile-img-card {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 1.5rem;
+  display: block;
+  border-radius: 50%;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Material Form Field */
+.mat-mdc-form-field {
+  margin-top: 16px;
+}
+
+/* Preview/Gallery Images */
+.preview {
+  max-width: 180px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.preview:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Image Grid/Gallery Layout */
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* File Input Styling */
+input[type="file"] {
+  padding: 0.75rem;
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  background: rgba(102, 126, 234, 0.02);
+}
+
+input[type="file"]:hover {
+  border-color: var(--primary-color);
+  background: rgba(102, 126, 234, 0.05);
+}
+
+/* Alert Messages */
+.alert {
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.alert-success {
+  background: #d1fae5;
+  border: 1px solid var(--success-color);
+  color: #065f46;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.alert-danger {
+  background: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #991b1b;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-container.card {
+    margin: 1.5rem 1rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .preview {
+    max-width: 120px;
+  }
+
+  .image-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+  }
+}

@@ -1,0 +1,52 @@
+<!--This block of code represents the 4th step of the registration process. It shows the file upload option-->
+<div class="col-md-12">
+
+  <div class="card card-container">
+
+    <h3 class="text-center text-warning ">Your Current Images</h3>
+
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">First Name</th>
+
+          <th scope="col">Last Name</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor=" let preview of previews;let i=index">
+
+          <td>{{preview.id}}</td>
+          <td> <img [src]="preview.data" class="preview"></td>
+          <td> <button  [disabled]="hotel.hotelImages.length == 1"(click)="deleteHotelImage(preview.id)" class="btn btn-danger">delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+
+</div>
+<div class="col-md-12">
+
+  <div class="card card-container">
+
+    <h3 class="text-center text-warning ">Upload hotel images</h3>
+    <!--preview of images -->
+    <div>
+      <img *ngFor='let preview of previews2' [src]="preview" class="preview">
+    </div>
+    <!--input for files-->
+    <label for="hotelName">Hotel Name</label>
+    <input id="files" type="file" accept="image/*" multiple (change)="selectFiles($event)">
+    <button class="btn btn-info mt-2" [disabled]="previews2.length == 0"(click)="updateHotelImages()">update photos</button>
+    <div *ngIf="selectedFiles==undefined" class="text-danger font-weight-bold mt-1">
+
+      *You need to Add at least 1 picture to your hotel
+
+    </div>
+  </div>
+
+</div>
