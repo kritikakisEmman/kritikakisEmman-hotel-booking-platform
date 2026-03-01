@@ -30,12 +30,11 @@ COPY --from=build /app/dist/bookingApp /usr/share/nginx/html
 # Αντιγράφουμε το nginx config ως template
 COPY nginx.conf /etc/nginx/conf.d/default.conf.template
 
-# Default τιμές για local Docker Compose (ίδιες με πριν)
+# Default τιμή για local Docker Compose
 ENV BACKEND_URL=http://backend:8080
-ENV NGINX_RESOLVER=127.0.0.11
 
 # Ο nginx ακούει στην πόρτα 80
 EXPOSE 80
 
-# Κατά την εκκίνηση: αντικατάσταση env vars στο config, μετά nginx
-CMD ["/bin/sh", "-c", "envsubst '${BACKEND_URL} ${NGINX_RESOLVER}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+# Κατά την εκκίνηση: διαβάζουμε τον DNS resolver από το σύστημα (δουλεύει σε Docker ΚΑΙ Railway)
+CMD ["/bin/sh", "-c", "NGINX_RESOLVER=$(awk '/^nameserver/{print $2; exit}' /etc/resolv.conf) && envsubst '${BACKEND_URL} ${NGINX_RESOLVER}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
