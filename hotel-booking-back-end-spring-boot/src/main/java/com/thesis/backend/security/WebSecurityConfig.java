@@ -6,7 +6,6 @@ import com.thesis.backend.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -61,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .antMatchers("/api/test/**").permitAll()
       .antMatchers("/api/rms/**").permitAll()
       .antMatchers("/api/hotel/getHotelsPaginatedWithSearchCriteria/**").permitAll()
-      .antMatchers("/api/hotel/getHotelsPaginated/**").permitAll() 
+      .antMatchers("/api/hotel/getHotelsPaginated/**").permitAll()
       .antMatchers("/api/hotel/deleteHotels/**").permitAll()
       .antMatchers("/api/hotel/getHotelById/**").permitAll()
       .antMatchers("/api/hotel/setHotel/**").permitAll()
