@@ -39,4 +39,4 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 
 # Η εντολή που τρέχει όταν ξεκινά το container
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx256m", "-Xms64m", "-Djava.awt.headless=true", "-jar", "app.jar"]
