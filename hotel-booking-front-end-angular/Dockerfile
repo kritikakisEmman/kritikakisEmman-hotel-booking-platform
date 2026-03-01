@@ -37,4 +37,4 @@ ENV BACKEND_URL=http://backend:8080
 EXPOSE 80
 
 # Κατά την εκκίνηση: διαβάζουμε τον DNS resolver από το σύστημα (δουλεύει σε Docker ΚΑΙ Railway)
-CMD ["/bin/sh", "-c", "NGINX_RESOLVER=$(awk '/^nameserver/{print $2; exit}' /etc/resolv.conf) && envsubst '${BACKEND_URL} ${NGINX_RESOLVER}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+CMD ["/bin/sh", "-c", "NGINX_RESOLVER=$(awk '/^nameserver/{print $2; exit}' /etc/resolv.conf | sed 's/.*:.*:.*/[&]/') && envsubst '${BACKEND_URL} ${NGINX_RESOLVER}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
