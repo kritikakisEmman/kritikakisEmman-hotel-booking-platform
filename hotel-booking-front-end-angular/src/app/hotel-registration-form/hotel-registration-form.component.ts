@@ -227,7 +227,7 @@ export class HotelRegistrationFormComponent implements OnInit {
   }
   deleteAvailableRooms(id: number) {
     for (let i = 0; i < this.availableRooms.length; i++) {
-      if (id = this.availableRooms[i].number) {
+      if (id === this.availableRooms[i].number) {
         this.availableRooms.splice(i, 1);
         break;
       }

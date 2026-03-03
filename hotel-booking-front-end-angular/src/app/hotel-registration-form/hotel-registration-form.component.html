@@ -492,9 +492,9 @@
 
             <label for="roomType">Room Type</label>
             <select formControlName="roomType" (change)="selectChangeHandler($event)" [(ngModel)]="selectedType" class="form-control">
-              <ng-container *ngFor="let types of roomTypes">
-                <option value={{types}}>{{types}}</option>
-              </ng-container>
+              <option value="Si">Single</option>
+              <option value="Db">Double</option>
+              <option value="Tr">Triple</option>
             </select>
 
 
