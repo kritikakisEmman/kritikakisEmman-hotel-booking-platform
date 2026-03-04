@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Address } from '../classes/address';
 import { Hotel } from '../classes/hotel';
@@ -20,7 +19,7 @@ export class HotelInfoComponent implements OnInit {
   userId!: number;
   hotel: Hotel = new Hotel();
 
-  constructor(private userService: UserService, private tokenStorageService: TokenStorageService, private router: Router, private hotelService: HotelService, private sanitizer: DomSanitizer,  private fb: FormBuilder) { }
+  constructor(private userService: UserService, private tokenStorageService: TokenStorageService, private router: Router, private hotelService: HotelService, private fb: FormBuilder) { }
   hotelInfoForm = this.fb.group({
     
     hotelName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20), this.noWhitespaceValidator]],
@@ -42,12 +41,6 @@ export class HotelInfoComponent implements OnInit {
       this.hotel = res;
       console.log(this.hotel);
 
-      //we need to make the imageUrls to image format
-      for (let i = 0; i < this.hotel.hotelImages.length; i++) {
-        let objectURL = 'data:image/jpeg;base64,' + this.hotel.hotelImages[i].data;
-        this.hotel.hotelImages[i].data = this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
-
-      }
       //end of image manipulation
       this.hotelInfoForm.controls['hotelName'].setValue(this.hotel.hotelName);
       this.hotelInfoForm.get('hotelDescription')?.setValue(this.hotel.hotelDescription)

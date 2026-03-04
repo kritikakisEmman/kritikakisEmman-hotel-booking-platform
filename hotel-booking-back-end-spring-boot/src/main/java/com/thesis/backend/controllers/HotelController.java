@@ -1,5 +1,7 @@
 package com.thesis.backend.controllers;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.thesis.backend.models.*;
 import com.thesis.backend.payload.request.HotelInfoRequest;
 import com.thesis.backend.payload.response.MessageResponse;
@@ -20,6 +22,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 
 
@@ -33,17 +36,24 @@ public HotelRepository hotelRepository;
 public ImageRepository imageRepository;
 @Autowired
 public UserRepository userRepository;
+/** Cloudinary client — used to upload images and receive back a CDN URL */
+@Autowired
+private Cloudinary cloudinary;
 
 @PostMapping("/setHotel")
 public ResponseEntity<?> setHotel(@RequestPart("hotel") Hotel hotel,@RequestPart("files") MultipartFile[] files) {
 	ArrayList<Image> images = new ArrayList<Image>(); // Create an ArrayList object
     Arrays.asList(files).stream().forEach(file -> {
-    	try { 
-    		 Image image=new Image(file.getBytes());
-   		 images.add(image);
-	     image.setHotel(hotel);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+    	try {
+    		// Upload the file bytes to Cloudinary and get back a CDN URL
+    		Map<String, Object> uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+    		// Store only the secure URL — no binary data in the DB
+    		Image image = new Image((String) uploadResult.get("secure_url"));
+   		 	images.add(image);
+	     	image.setHotel(hotel);
+		} catch (Exception e) {
+			// Catching Exception (not just IOException) because Cloudinary throws RuntimeException on auth errors
+			System.err.println("Image upload failed: " + e.getMessage());
 			e.printStackTrace();
 		}
     });
@@ -103,11 +113,11 @@ public ResponseEntity<?> setImage(@RequestParam("files") MultipartFile[] files) 
 	     
 	      Arrays.asList(files).stream().forEach(file -> {
 	    	try {
-	    		
-	    		 Image image=new Image(file.getBytes());
+	    		// Upload to Cloudinary and save the returned URL
+	    		Map<String, Object> uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+	    		Image image = new Image((String) uploadResult.get("secure_url"));
 				this.imageRepository.save(image);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	        
@@ -250,13 +260,13 @@ public void updateHotelImages(@RequestPart("hotelId") long hotelId,@RequestPart(
 	Hotel hotel=this.hotelRepository.findById(hotelId).orElse(null); 
 	ArrayList<Image> images = new ArrayList<Image>(); // Create an ArrayList object
     Arrays.asList(files).stream().forEach(file -> {
-    	try { 
-    		 Image image=new Image(file.getBytes());
-   		
-	     image.setHotel(hotel);
-	     images.add(image);
+    	try {
+    		// Upload to Cloudinary and store the returned URL
+    		Map<String, Object> uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+    		Image image = new Image((String) uploadResult.get("secure_url"));
+	     	image.setHotel(hotel);
+	     	images.add(image);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     });

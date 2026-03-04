@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Hotel } from '../classes/hotel';
 import { Reservation } from '../classes/reservation';
@@ -75,7 +74,7 @@ export class ReservationComponent implements OnInit {
 
   });
   //constractor with all the requiered variables
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private hotelService: HotelService, private sanitizer: DomSanitizer, private reservationService: ReservationService, private facebookService: FacebookService)
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private hotelService: HotelService, private reservationService: ReservationService, private facebookService: FacebookService)
   {
     //render the render object for paypal. it takes a jason for parameter
     console.log(paypal)
@@ -108,11 +107,6 @@ export class ReservationComponent implements OnInit {
       //Based on the hotel that user chose we call the back end api to give us this hotel variable;
       this.hotelService.getHotelById(this.hotelId).subscribe(res => {
         this.hotel = res;
-        //we need to make the imageUrls to image format
-        for (let i = 0; i < this.hotel.hotelImages.length; i++) {
-          let objectURL = 'data:image/jpeg;base64,' + this.hotel.hotelImages[i].data;
-          this.hotel.hotelImages[i].data = this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
-        }
       });
       //end of get hotel subscribe
 

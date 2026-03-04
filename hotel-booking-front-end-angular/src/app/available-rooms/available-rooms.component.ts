@@ -5,7 +5,6 @@ import { NoEmptySpacesAllowedValidator } from '../classes/no-empty-spaces-allowe
 
 import { Hotel } from '../classes/hotel';
 import { HotelService } from '../services/hotel.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TokenStorageService } from '../_services/token-storage.service';
 declare var $: any;
@@ -45,7 +44,7 @@ export class AvailableRoomsComponent implements OnInit {
 
   });
 
-  constructor(private fb: FormBuilder, private tokenStorageService: TokenStorageService, private router: Router, private hotelService: HotelService, private sanitizer: DomSanitizer) { }
+  constructor(private fb: FormBuilder, private tokenStorageService: TokenStorageService, private router: Router, private hotelService: HotelService) { }
   ngOnInit(): void {
     this.maxForFromDate.setDate(this.maxForFromDate.getDate() + 60);
     this.maxForToDate.setDate(this.maxForToDate.getDate() + 60);
@@ -65,12 +64,6 @@ export class AvailableRoomsComponent implements OnInit {
       this.hotel = res;
       console.log(this.hotel);
 
-      //we need to make the imageUrls to image format
-      for (let i = 0; i < this.hotel.hotelImages.length; i++) {
-        let objectURL = 'data:image/jpeg;base64,' + this.hotel.hotelImages[i].data;
-        this.hotel.hotelImages[i].data = this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
-
-      }
       //end of image manipulation
 
 

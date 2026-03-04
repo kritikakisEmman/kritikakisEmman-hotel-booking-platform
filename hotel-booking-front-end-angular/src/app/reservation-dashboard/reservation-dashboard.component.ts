@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Hotel } from '../classes/hotel';
 import { ReservationType } from '../classes/reservation-type';
 import { HotelService } from '../services/hotel.service';
@@ -17,7 +16,7 @@ export class ReservationDashboardComponent implements OnInit {
   index: number = 0;
   reservationTypes: ReservationType[] = [];
   reservationsLength = 0;
-  constructor(private reservationService: ReservationService, private tokenStorageService: TokenStorageService, private sanitizer: DomSanitizer, private hotelService: HotelService) { }
+  constructor(private reservationService: ReservationService, private tokenStorageService: TokenStorageService, private hotelService: HotelService) { }
 
   ngOnInit(): void {
     const user = this.tokenStorageService.getUser();
@@ -28,12 +27,6 @@ export class ReservationDashboardComponent implements OnInit {
       this.reservationsLength = this.hotel.hotelReservations.length;
       console.log(this.hotel);
       
-      //we need to make the imageUrls to image format
-      for (let i = 0; i < this.hotel.hotelImages.length; i++) {
-        let objectURL = 'data:image/jpeg;base64,' + this.hotel.hotelImages[i].data;
-        this.hotel.hotelImages[i].data = this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
-
-      }
       //end of image manipulation
   
 

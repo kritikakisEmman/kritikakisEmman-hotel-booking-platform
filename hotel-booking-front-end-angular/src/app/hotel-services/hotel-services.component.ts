@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Hotel } from '../classes/hotel';
 import { HotelServiceClass } from '../classes/hotel-service-class';
 import { HotelService } from '../services/hotel.service';
@@ -31,7 +30,7 @@ export class HotelServicesComponent implements OnInit {
     console.log(selectedServices)
   }
 
-  constructor(private fb: FormBuilder, private tokenStorageService: TokenStorageService, private hotelService: HotelService, private sanitizer: DomSanitizer,) { }
+  constructor(private fb: FormBuilder, private tokenStorageService: TokenStorageService, private hotelService: HotelService) { }
 
   ngOnInit(): void {
     const user = this.tokenStorageService.getUser();
@@ -39,11 +38,6 @@ export class HotelServicesComponent implements OnInit {
     this.hotelService.getHotelByUserId(this.userId).subscribe(res => {
       this.hotel = res;
       console.log(this.hotel);
-
-      for (let i = 0; i < this.hotel.hotelImages.length; i++) {
-        let objectURL = 'data:image/jpeg;base64,' + this.hotel.hotelImages[i].data;
-        this.hotel.hotelImages[i].data = this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
-      }
 
       const selectedServices = (this.servicesForm.controls['selectedServices'] as FormArray);
       for (let service of this.hotel.hotelServices) {

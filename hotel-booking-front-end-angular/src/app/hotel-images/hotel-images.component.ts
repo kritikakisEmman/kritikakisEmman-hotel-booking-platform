@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Hotel } from '../classes/hotel';
 import { Image } from '../classes/image';
 import { HotelService } from '../services/hotel.service';
@@ -24,7 +23,7 @@ export class HotelImagesComponent implements OnInit {
   hotelImages: Image[] = [];
 
   myFiles: string[] = [];
-  constructor(private hotelService: HotelService, private tokenStorageService: TokenStorageService, private sanitizer: DomSanitizer) { }
+  constructor(private hotelService: HotelService, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     this.populateHotel();
@@ -45,15 +44,7 @@ export class HotelImagesComponent implements OnInit {
       //we need to make the imageUrls to image format
       for (let i = 0; i < this.hotel.hotelImages.length; i++) {
         console.log(this.hotel.hotelImages[i].data)
-
-
-
-
-        let objectURL = 'data:image/jpeg;base64,' + this.hotel.hotelImages[i].data
-        this.hotel.hotelImages[i].data = this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
         this.previews.push(this.hotel.hotelImages[i])
-
-
       }
 
 

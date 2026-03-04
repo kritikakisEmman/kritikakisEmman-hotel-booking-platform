@@ -1,19 +1,15 @@
 package com.thesis.backend.models;
 
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -104,10 +100,11 @@ public class FacebookService {
 		images = this.imageRepository.findAllByHotelId(availabilityWithMinRoomPrice.getHotel().getId());
 		System.out.println("size of image arraylist is " + images.size());
 
-		// I do some tricks to be able to take the image as a resource
-		ByteArrayInputStream bis = new ByteArrayInputStream(images.get(0).getData());
-		BufferedImage bImage2 = ImageIO.read(bis);
-		ImageIO.write(bImage2, "jpg", new File("output.jpg"));
+		// Download image from Cloudinary URL to a local file
+		URL imageUrl = new URL(images.get(0).getData());
+		try (InputStream in = imageUrl.openStream()) {
+			Files.copy(in, Paths.get("output.jpg"), StandardCopyOption.REPLACE_EXISTING);
+		}
 		System.out.println("image created");
 		Resource resource = null;
 

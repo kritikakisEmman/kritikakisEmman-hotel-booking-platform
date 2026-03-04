@@ -1,5 +1,4 @@
 import { Component, OnChanges, OnInit, SecurityContext } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
@@ -40,7 +39,7 @@ export class AvailableRoomsBoardComponent implements OnInit {
   sizeNumber: number = 2;
   theTotalElements: number = 0;
 
-  constructor(private rmsService:RmsService,private sanitizer: DomSanitizer, private roomBoardService: RoomBoardService, private router: Router, private route: ActivatedRoute, private ngbDateParserFormatter: NgbDateParserFormatter, private hotelService: HotelService) { }
+  constructor(private rmsService:RmsService, private roomBoardService: RoomBoardService, private router: Router, private route: ActivatedRoute, private ngbDateParserFormatter: NgbDateParserFormatter, private hotelService: HotelService) { }
 
   ngOnInit(): void {
     //subscribe on values that come from the search bar
@@ -88,12 +87,6 @@ export class AvailableRoomsBoardComponent implements OnInit {
         this.theTotalElements = res.totalElements;
 
         console.log(this.hotels);
-        for (let hotel of this.hotels) {
-          if (hotel.hotelImages.length != 0) {
-            let objectURL = 'data:image/jpeg;base64,' + hotel.hotelImages[0].data;
-            hotel.hotelImages[0].data = this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
-          }
-        }
       });
       //end of subscribe call for get hotels
 
@@ -111,12 +104,6 @@ export class AvailableRoomsBoardComponent implements OnInit {
       this.theTotalElements = res.totalElements;
       console.log
       console.log(this.hotels);
-      for (let hotel of this.hotels) {
-        if (hotel.hotelImages.length != 0) {
-          let objectURL = 'data:image/jpeg;base64,' + hotel.hotelImages[0].data;
-          hotel.hotelImages[0].data = this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
-        }
-      }
     });
     //end of subscribe call for get hotels
 

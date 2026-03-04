@@ -1,7 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
@@ -45,7 +44,7 @@ export class HotelAvailabilityComponent implements OnInit {
   selectedRoomNumber: number = 0;
   roomNumbers: number[][]=[];
 
-  constructor(private route: ActivatedRoute, private hotelService: HotelService, private sanitizer: DomSanitizer, private datePipe: DatePipe, private fb: FormBuilder, private ngbDateParserFormatter: NgbDateParserFormatter, private router: Router,) { }
+  constructor(private route: ActivatedRoute, private hotelService: HotelService, private datePipe: DatePipe, private fb: FormBuilder, private ngbDateParserFormatter: NgbDateParserFormatter, private router: Router) { }
 
   selectChangeHandler(event: any,avail:Availability,i:number) {
   
@@ -78,12 +77,6 @@ export class HotelAvailabilityComponent implements OnInit {
        
        
         
-          //we need to make the imageUrls to image format
-          for (let i = 0; i < this.hotel.hotelImages.length; i++) {
-            let objectURL = 'data:image/jpeg;base64,' + this.hotel.hotelImages[i].data;
-            this.hotel.hotelImages[i].data = this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
-
-        }
         //in case that he came without a range
           let tempType: string = '';
           for (let i = 0; i < this.hotel.hotelAvailabilities.length; i++) {
