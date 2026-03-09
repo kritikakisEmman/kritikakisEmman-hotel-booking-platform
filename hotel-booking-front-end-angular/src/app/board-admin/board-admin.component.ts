@@ -1,24 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
+import { AdminService } from '../_services/admin.service';
+import { User } from '../classes/user';
 
 @Component({
   selector: 'app-board-admin',
   templateUrl: './board-admin.component.html',
-  styleUrls: ['./board-admin.component.css']
+  styleUrls: ['./board-admin.component.css'],
 })
 export class BoardAdminComponent implements OnInit {
-  content?: string;
+  users?: User[];
 
-  constructor(private userService: UserService) { }
+  constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
-    this.userService.getAdminBoard().subscribe(
-      data => {
-        this.content = data;
-      },
-      err => {
-        this.content = JSON.parse(err.error).message;
-      }
-    );
+    this.adminService.getUsers().subscribe({
+      next: (data: any) => { this.users = data; },
+      error: (err: any) => { console.log(err); }
+    });
+  }
+
+  deleteUser(userId: number): void {
+    this.adminService.deleteUser(userId).subscribe({
+      next: () => { this.ngOnInit(); },
+      error: (err: any) => { console.log(err); }
+    });
   }
 }

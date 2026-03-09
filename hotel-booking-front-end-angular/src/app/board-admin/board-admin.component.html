@@ -1,5 +1,31 @@
-<div class="container">
-  <header class="jumbotron">
-    <p>{{ content }}</p>
-  </header>
+<div>
+
+<table *ngIf="users && users.length>0" class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Id
+
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Roles</th>
+ 
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users;let i=index">
+
+        <td>{{i+1}}</td>
+        <td>{{user.id}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.roles}}</td>
+        <td><button class="btn btn-danger" (click)="deleteUser(user.id)" > Delete<i class="fas fa-trash-alt"></i></button></td>
+
+
+      </tr>
+    </tbody>
+  </table>
+  <h4 *ngIf="users && users.length==0 " class="text text-danger text-center ">There are no reservations in this hotel <i class="fas fa-sad-tear"></i></h4>
 </div>
+

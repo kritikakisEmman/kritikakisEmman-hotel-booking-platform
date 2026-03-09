@@ -9,11 +9,10 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./side-bar.component.css']
 })
 export class SideBarComponent implements OnInit {
-
+  userRole='';
   constructor(private userService: UserService, private tokenStorageService: TokenStorageService, private router: Router) { }
 
-  ngOnInit(): void {
-   
+  ngOnInit(): void {   
   }
 
 }
