@@ -17,6 +17,6 @@ export class AdminService {
   }
 
   deleteUser(userId:number):Observable<any>{
-    return this.http.delete(API_URL+`users/${userId}`)
+    return this.http.delete(API_URL+`users/${userId}`, {responseType: 'text'})
   }
 }

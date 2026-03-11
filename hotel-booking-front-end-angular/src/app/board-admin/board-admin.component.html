@@ -1,4 +1,4 @@
-<div>
+<div class="col-md-12">
 
 <table *ngIf="users && users.length>0" class="table table-striped">
     <thead>
@@ -13,13 +13,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of users;let i=index">
+      <tr *ngFor="let user of users; let i=index">
 
         <td>{{i+1}}</td>
         <td>{{user.id}}</td>
         <td>{{user.username}}</td>
         <td>{{user.email}}</td>
-        <td>{{user.roles}}</td>
+        <td>{{user.roles[0]?.name}}</td>
         <td><button class="btn btn-danger" (click)="deleteUser(user.id)" > Delete<i class="fas fa-trash-alt"></i></button></td>
 
 

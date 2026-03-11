@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thesis.backend.models.User;
+import com.thesis.backend.repository.HotelRepository;
 import com.thesis.backend.repository.UserRepository;
 
 
@@ -25,23 +26,25 @@ public class AdminController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    HotelRepository hotelRepository;
+
     @GetMapping("/users")
     public List<User> getUsers( ) {
-	
+
         return userRepository.findAll();
 
     }
     @DeleteMapping("/users/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable long userId ) {
-	
+
         try {
-         userRepository.deleteById(userId);
+         hotelRepository.findAllByUserId(userId).ifPresent(hotel -> hotelRepository.delete(hotel));
          return ResponseEntity.ok("user deleted succesfully");
         } catch (Exception e) {
-            // TODO: handle exception
-            return ResponseEntity.notFound().build() ;//400
+            return ResponseEntity.notFound().build();
         }
-        
+
 
     }
     

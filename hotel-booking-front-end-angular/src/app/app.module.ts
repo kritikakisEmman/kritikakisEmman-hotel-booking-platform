@@ -61,6 +61,7 @@ import { HotelImagesComponent } from './hotel-images/hotel-images.component';
     HotelServicesComponent,
     ReservationDashboardComponent,
     HotelImagesComponent,
+  
  
 
   ],

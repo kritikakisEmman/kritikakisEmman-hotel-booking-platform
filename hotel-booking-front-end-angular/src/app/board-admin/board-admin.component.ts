@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AdminService } from '../_services/admin.service';
 import { User } from '../classes/user';
 
@@ -10,19 +10,29 @@ import { User } from '../classes/user';
 export class BoardAdminComponent implements OnInit {
   users?: User[];
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.adminService.getUsers().subscribe({
-      next: (data: any) => { this.users = data; },
-      error: (err: any) => { console.log(err); }
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    console.log('loadUsers called');
+    this.adminService.getUsers().subscribe(res => {
+      console.log('users received:', res);
+      this.users = res;
+      this.cdr.detectChanges();
+    }, err => {
+      console.log('loadUsers error:', err);
     });
   }
 
   deleteUser(userId: number): void {
-    this.adminService.deleteUser(userId).subscribe({
-      next: () => { this.ngOnInit(); },
-      error: (err: any) => { console.log(err); }
+    this.adminService.deleteUser(userId).subscribe(res => {
+      console.log('delete success:', res);
+      this.loadUsers();
+    }, err => {
+      console.log('delete error:', err);
     });
   }
 }

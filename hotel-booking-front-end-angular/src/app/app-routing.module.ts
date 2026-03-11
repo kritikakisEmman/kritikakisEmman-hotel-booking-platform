@@ -35,12 +35,13 @@ const routes: Routes = [
   { path: 'hotelAvailability', component: HotelAvailabilityComponent },
   {
     path: 'sideBar', component: SideBarComponent, children: [
-
+      { path: '', component: HotelInfoComponent }, 
       { path: 'hotelInfo', component: HotelInfoComponent },
       { path: 'availableRooms', component: AvailableRoomsComponent },
       { path: 'hotelServices', component: HotelServicesComponent },
       { path: 'hotelImages', component: HotelImagesComponent },
-      { path: 'reservationDashboard', component: ReservationDashboardComponent }
+      { path: 'reservationDashboard', component: ReservationDashboardComponent },
+      { path: 'admin', component: BoardAdminComponent }
     ]
   },
   { path: 'reservation', component: ReservationComponent },
@@ -48,7 +49,6 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'user', component: BoardUserComponent },
   { path: 'mod', component: BoardModeratorComponent },
-  { path: 'admin', component: BoardAdminComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

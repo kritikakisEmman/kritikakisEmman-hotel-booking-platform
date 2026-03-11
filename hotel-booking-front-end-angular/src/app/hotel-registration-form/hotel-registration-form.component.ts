@@ -51,7 +51,7 @@ export class HotelRegistrationFormComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
-  roles: string[] = ['user'];
+  roles: string[] = ['mod'];
 
   //This form takes the values from the 1st step
   hotelInfoForm = this.fb.group({

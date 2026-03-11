@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Address } from '../classes/address';
 import { Hotel } from '../classes/hotel';
 import { HotelInfoRequest } from '../classes/hotel-info-request';
 import { HotelService } from '../services/hotel.service';
 import { TokenStorageService } from '../_services/token-storage.service';
-import { UserService } from '../_services/user.service';
 
 
 @Component({
@@ -19,7 +17,7 @@ export class HotelInfoComponent implements OnInit {
   userId!: number;
   hotel: Hotel = new Hotel();
 
-  constructor(private userService: UserService, private tokenStorageService: TokenStorageService, private router: Router, private hotelService: HotelService, private fb: FormBuilder) { }
+  constructor(private tokenStorageService: TokenStorageService, private hotelService: HotelService, private fb: FormBuilder) { }
   hotelInfoForm = this.fb.group({
     
     hotelName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20), this.noWhitespaceValidator]],
