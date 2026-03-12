@@ -250,18 +250,12 @@ public void updateHotelServices(@PathVariable long hotelId,@RequestBody ArrayLis
 	
 }
 @PutMapping("/updateHotelImages")
-public void updateHotelImages(@RequestPart("hotelId") long hotelId,@RequestPart("files") MultipartFile[] files ) {
+public ResponseEntity<String> updateHotelImages(@RequestPart("hotelId") long hotelId,@RequestPart("files") MultipartFile[] files ) {
 
-	  
-
-	System.out.println(hotelId);
-	System.out.println(files.length);
-	
-	Hotel hotel=this.hotelRepository.findById(hotelId).orElse(null); 
-	ArrayList<Image> images = new ArrayList<Image>(); // Create an ArrayList object
+	Hotel hotel=this.hotelRepository.findById(hotelId).orElse(null);
+	ArrayList<Image> images = new ArrayList<Image>();
     Arrays.asList(files).stream().forEach(file -> {
     	try {
-    		// Upload to Cloudinary and store the returned URL
     		Map<String, Object> uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
     		Image image = new Image((String) uploadResult.get("secure_url"));
 	     	image.setHotel(hotel);
@@ -270,21 +264,14 @@ public void updateHotelImages(@RequestPart("hotelId") long hotelId,@RequestPart(
 			e.printStackTrace();
 		}
     });
-	hotel.getHotelServices().clear();
+	hotel.getHotelImages().clear();
 	this.hotelRepository.save(hotel);
-	 for(int i=0;i<images.size();i++)
-	    {
-	   
-
-
-	     
-		 hotel.getHotelImages().add(images.get(i));
-	      
-	    	
-	    }
+	for(int i=0;i<images.size();i++) {
+		hotel.getHotelImages().add(images.get(i));
+	}
 	this.hotelRepository.save(hotel);
-	
-} 
+	return ResponseEntity.ok("images updated successfully");
+}
 @DeleteMapping("/deleteHotelImageById/{hotelId}/{hotelImageId}")
 public void deleteHotelImageById(@PathVariable long hotelId,@PathVariable long hotelImageId ) {
 

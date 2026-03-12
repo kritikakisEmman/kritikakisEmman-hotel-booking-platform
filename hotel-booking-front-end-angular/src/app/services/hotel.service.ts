@@ -58,10 +58,7 @@ export class HotelService {
     });
     formData.append("hotelId", blobOverrides);
     console.log(formData);
-    return this.httpClient.put<any>(this.baseUrl + '/updateHotelImages/', formData )
-      .pipe(map((res: any) => {
-        return res;
-      }));
+    return this.httpClient.put(this.baseUrl + '/updateHotelImages/', formData, { responseType: 'text' });
   }
   deleteHotelImageById(hotelId: number, hotelImageId: number) {
     return this.httpClient.delete<any>(this.baseUrl + '/deleteHotelImageById/' + `${hotelId}/` + `${hotelImageId}/`, httpOptions)
